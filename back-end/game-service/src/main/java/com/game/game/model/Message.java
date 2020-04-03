@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,7 +14,7 @@ import java.util.TreeSet;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+
 @Builder
 @Table(name = "messages_table")
 public class Message {
@@ -36,6 +37,7 @@ public class Message {
     @JoinColumn(name = "message_reply_id")
     private Message parent;
 
+
     @OneToMany(mappedBy = "parent")
-    private Set<Message> replies = new TreeSet<>();
+    private Set<Message> replies = new HashSet<>();
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+
 @Builder
 @Table(name = "chats_table")
 public class Chat {
@@ -20,6 +20,7 @@ public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
+
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "chat_message_table",

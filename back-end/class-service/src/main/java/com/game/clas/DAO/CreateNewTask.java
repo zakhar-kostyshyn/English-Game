@@ -17,6 +17,9 @@ public class CreateNewTask {
     @NotBlank(message = "Field 'game' must be filled")
     private String game;
 
+    @NotBlank(message = "Field 'clazz' must be filled")
+    private String clazz;
+
     private String end_date;
 
 }

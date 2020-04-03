@@ -25,7 +25,7 @@ public class Game {
     private Long ID;
 
     @NotBlank(message = "Field 'name' must be filled")
-    @Size(max = 10)
+    @Size(max = 50)
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY)

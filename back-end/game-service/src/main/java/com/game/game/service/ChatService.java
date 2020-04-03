@@ -8,12 +8,15 @@ import com.game.game.model.Message;
 import com.game.game.repository.ChatRepository;
 import com.game.game.repository.GameRepository;
 import com.game.game.repository.MessageRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
+@Slf4j
 public class ChatService {
 
     @Autowired
@@ -32,6 +35,8 @@ public class ChatService {
 
         Chat existChat = gameRepository.findByName(name).get().getChat();
         List<Message> messageList = existChat.getData();
+
+        log.info("all Message : " + messageList + " in Chat : " + existChat.getGame());
 
         return messageList;
     }
@@ -57,6 +62,9 @@ public class ChatService {
 
         chatRepository.save(existChat);
 
+        log.info("new  Message : " + newMessage + " in Chat : " + existChat.getGame());
+        log.info("all Message : " + messageList + " in Chat : " + existChat.getGame());
+
         return messageList;
     }
 
@@ -67,34 +75,40 @@ public class ChatService {
 
         Message existParentMessage = messageRepository.findById(Long.parseLong(createNewReply.getParent())).get();
 
-        Message newMessage = Message.builder()
+        Message newReply = Message.builder()
                 .parent(existParentMessage)
                 .date(createNewReply.getDate())
                 .message(createNewReply.getMessage())
                 .username(createNewReply.getUsername())
                 .build();
 
-        messageRepository.save(newMessage);
+        messageRepository.save(newReply);
+
+        existParentMessage.getReplies().add(newReply);
 
         Game existGame = gameRepository.findByName(createNewReply.getGame()).get();
         Chat existChat = existGame.getChat();
         List<Message> messageList = existChat.getData();
 
-        messageList.add(newMessage);
+        messageList.add(newReply);
 
         chatRepository.save(existChat);
+
+        log.info("new  Reply : " + newReply + " in Parent Message : " + existParentMessage.getMessage());
+        log.info("all Message : " + messageList + " in Chat : " + existChat.getGame());
 
         return messageList;
     }
 
-    //  get all message from game's chat
-    public List<Message> getReplies(String messageId) {
+    //  get all repy from game's chat
+    public Set<Message> getReplies(String messageId) {
 
         // TODO check if user with input game name exist
 
         Message existMessage = messageRepository.findById(Long.parseLong(messageId)).get();
-        List<Message> repliesList = (List) existMessage.getReplies();
 
-        return repliesList;
+        log.info("all Reply : " + existMessage.getReplies() + " in Parent Mesage : " + existMessage.getMessage());
+
+        return existMessage.getReplies();
     }
 }

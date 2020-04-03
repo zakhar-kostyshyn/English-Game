@@ -3,7 +3,7 @@ package com.game.clas.web;
 import com.game.clas.DAO.CreateNewClazz;
 import com.game.clas.DAO.CreateNewCondition;
 import com.game.clas.DAO.CreateNewTask;
-import com.game.clas.service.TeacherService;
+import com.game.clas.service.ClasService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,10 @@ import javax.validation.Valid;
 
 @RestController
 @Slf4j
-public class TeacherController {
+public class ClasController {
 
     @Autowired
-    private TeacherService teacherService;
+    private ClasService teacherService;
 
     //  create class
     @PostMapping("/class/create/class")
@@ -40,21 +40,21 @@ public class TeacherController {
     }
 
     //  get all classes for teacher
-    @GetMapping("/class/class/{owner}")
+    @GetMapping("/class/clazz/{owner}")
     public ResponseEntity<?> getAllClasses(@Valid @PathVariable String owner) {
         log.info("/class/create/{" + owner + "} run");
         return ResponseEntity.ok(teacherService.getAllClazzes(owner));
     }
 
     //  get all tasks for class
-    @GetMapping("/class/class/{classId}")
+    @GetMapping("/class/task/{classId}")
     public ResponseEntity<?> getAllTasks(@Valid @PathVariable String classId) {
         log.info("/class/create/{" + classId + "} run");
         return ResponseEntity.ok(teacherService.getAllClazzesTask(classId));
     }
 
     //  get all conditions for task
-    @GetMapping("/class/class/{taskId}")
+    @GetMapping("/class/condition/{taskId}")
     public ResponseEntity<?> getAllConditions(@Valid @PathVariable String taskId) {
         log.info("/class/create/{" + taskId + "} run");
         return ResponseEntity.ok(teacherService.getAllTasksConditions(taskId));

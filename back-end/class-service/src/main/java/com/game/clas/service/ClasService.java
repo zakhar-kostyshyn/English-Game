@@ -17,7 +17,7 @@ import java.util.Set;
 
 @Service
 @Slf4j
-public class TeacherService {
+public class ClasService {
 
     @Autowired
     private ClazzRepository clazzRepository;

@@ -5,12 +5,14 @@ import com.game.game.model.Game;
 import com.game.game.model.Score;
 import com.game.game.repository.GameRepository;
 import com.game.game.repository.ScoreRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@Slf4j
 public class GameService {
 
     @Autowired
@@ -24,6 +26,8 @@ public class GameService {
 
         // TODO check if user with input game name exist
         Set<Score> scores = gameRepository.findByName(name).get().getScore();
+
+        log.info("all Score : " + scores + " in Game : " + name);
 
         return scores;
     }
@@ -45,6 +49,9 @@ public class GameService {
         addedSet.add(newScore);
 
         gameRepository.save(existedGame);
+
+        log.info("new Score : " + newScore + " in Game : " + existedGame);
+        log.info("all Score : " + addedSet + " in Game : " + createNewUserScore.getGame());
 
         return addedSet;
     }
