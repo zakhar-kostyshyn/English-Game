@@ -8,15 +8,14 @@ import store from './store'
 
 import 'semantic-ui-css/semantic.min.css';
 
-import Navbar from './Components/Common/Navbar';
-import Footer from './Components/Common/Footer';
+import Home from './Components/Home/Home';
+
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
-        <Navbar/>
-        <Footer/>
+        <Home/>
       </Router>
     </Provider>
   );

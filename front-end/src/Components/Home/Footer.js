@@ -1,17 +1,12 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-
+import { Header } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 const StyledFooter = styled.footer`
 
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
     background: black;
-    text-align: center;
-    padding-bottom: 4rem;
+    padding: 5rem;
 
     .footerHeader {
         color: white;
@@ -22,7 +17,7 @@ class Footer extends Component {
     render() {
         return (
             <StyledFooter >
-                <h1 className='footerHeader'>Footer</h1>
+                <Header className='footerHeader' textAlign='center' >Footer</Header>
             </StyledFooter>
         )
     }
