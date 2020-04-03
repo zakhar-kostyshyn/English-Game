@@ -9,12 +9,14 @@ import com.game.clas.model.Task;
 import com.game.clas.repository.ClazzRepository;
 import com.game.clas.repository.ConditionRepository;
 import com.game.clas.repository.TaskRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@Slf4j
 public class TeacherService {
 
     @Autowired
@@ -39,6 +41,8 @@ public class TeacherService {
 
         clazzRepository.save(newClazz);
 
+        log.info("new Class created : " + newClazz);
+
         return newClazz;
     }
 
@@ -52,6 +56,13 @@ public class TeacherService {
                 .build();
 
         taskRepository.save(newTask);
+
+        Clazz existClass = clazzRepository.findById(Long.parseLong(createNewTask.getClazz())).get();
+        existClass.getTasks().add(newTask);
+
+        clazzRepository.save(existClass);
+
+        log.info("new Task created : " + newTask + " in Class : " + existClass.getName());
 
         return newTask;
     }
@@ -70,6 +81,8 @@ public class TeacherService {
         existTask.getCondition().add(newCondition);
         taskRepository.save(existTask);
 
+        log.info("new Condition created : " + newCondition + " in Task : " + existTask.getName());
+
         return existTask.getCondition();
     }
 
@@ -77,6 +90,8 @@ public class TeacherService {
     public Set<Clazz> getAllClazzes (String owner) {
 
         Set<Clazz> clazzSet = clazzRepository.findAllByOwner(owner);
+
+        log.info("all Classes : " + clazzSet + " with owner : " + owner);
 
         return clazzSet;
     }
@@ -87,6 +102,8 @@ public class TeacherService {
         Clazz existClazz = clazzRepository.findById(Long.parseLong(clazzId)).get();
         Set<Task> existAllTask = existClazz.getTasks();
 
+        log.info("all Tasks : " + existAllTask + " in Class : " + existClazz.getName());
+
         return existAllTask;
     }
 
@@ -95,6 +112,8 @@ public class TeacherService {
 
         Task existTask = taskRepository.findById(Long.parseLong(taskId)).get();
         Set<Condition> existAllConditions = existTask.getCondition();
+
+        log.info("all Condition : " + existAllConditions + " in Task : " + existTask.getName());
 
         return existAllConditions;
     }

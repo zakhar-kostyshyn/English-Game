@@ -3,26 +3,20 @@ import {connect} from 'react-redux'
 import { Card } from 'semantic-ui-react'
 import CardView from "./CardView";
 
-const cards_group = (
-    <Card.Group itemsPerRow={2} centered>
-        <CardView name='Fast Vocabulary' color='CadetBlue' ></CardView>
-        <CardView name='Fast Phrases' color='Coral'></CardView>
-        <CardView name='Fast English' color='DarkGoldenRod'></CardView>
-        <CardView name='Food' color='DarkKhaki'></CardView>
-        <CardView name='Description' color='YellowGreen'></CardView>
-        <CardView name='Numbers' color='Salmon'></CardView>
-        <CardView name='Time' color='LightGreen'></CardView>
-        <CardView name='Spelling' color='Olive'></CardView>
-    </Card.Group>
-)
-
 
 class Games extends Component {
     render() {
         return (
-            <div>
-                {cards_group}
-            </div>
+            <Card.Group itemsPerRow={2} centered>
+                <CardView name='Fast Vocabulary' path='/home/fast_vocab' color='CadetBlue' ></CardView>
+                <CardView name='Fast Phrases' path='/home/fast_phrases' color='Coral'></CardView>
+                <CardView name='Fast English' path='/home/fast_english' color='DarkGoldenRod'></CardView>
+                <CardView name='Food' path='/home/food' color='DarkKhaki'></CardView>
+                <CardView name='Description' path='/home/decription' color='YellowGreen'></CardView>
+                <CardView name='Numbers' path='/home/numbers' color='Salmon'></CardView>
+                <CardView name='Time' path='/home/time' color='LightGreen'></CardView>
+                <CardView name='Spelling' path='/home/spelling' color='Olive'></CardView>
+            </Card.Group>
         )
     }
 }
