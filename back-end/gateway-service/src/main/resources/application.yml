@@ -1,15 +1,16 @@
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          facebook:
-              clientId: 2626413334346370
-              clientSecret: da696bb31640d077795967cbea80284e
-          github:
-              clientId: 30b6d96b62c2e58161d4
-              clientSecret: bce2a8b1c041d9108a7fd91a427c19390592cb33
-          google:
-              clientId: gA3kp2ZqnlhvIY34QQ8rbIir
-              clientSecret: 290769872814-scq4um6pmv155alr0vokqddn6c04gkmm.apps.googleusercontent.com
+#spring:
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          facebook:
+#              clientId: 2626413334346370
+#              clientSecret: da696bb31640d077795967cbea80284e
+#          github:
+#              clientId: 30b6d96b62c2e58161d4
+#              clientSecret: bce2a8b1c041d9108a7fd91a427c19390592cb33
+#          google:
+#              clientId: gA3kp2ZqnlhvIY34QQ8rbIir
+#              clientSecret: 290769872814-scq4um6pmv155alr0vokqddn6c04gkmm.apps.googleusercontent.com
+#
 

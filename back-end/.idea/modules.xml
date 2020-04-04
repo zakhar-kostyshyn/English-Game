@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/back-end.iml" filepath="$PROJECT_DIR$/back-end.iml" />
       <module fileurl="file://$PROJECT_DIR$/class-service/class-service.iml" filepath="$PROJECT_DIR$/class-service/class-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/config-service/config-service.iml" filepath="$PROJECT_DIR$/config-service/config-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/discovery-server/discovery-server.iml" filepath="$PROJECT_DIR$/discovery-server/discovery-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/game-service/game-service.iml" filepath="$PROJECT_DIR$/game-service/game-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/gateway-service/gateway-service.iml" filepath="$PROJECT_DIR$/gateway-service/gateway-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/user-service/user-service.iml" filepath="$PROJECT_DIR$/user-service/user-service.iml" />
