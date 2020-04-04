@@ -4,8 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
+
 
 
 @Entity
@@ -35,7 +36,11 @@ public class Clazz {
     @JoinTable(name = "class_task_table",
             joinColumns = @JoinColumn(name = "class_id"),
             inverseJoinColumns = @JoinColumn(name = "task_id"))
-    private Set<Task> tasks = new TreeSet<>();
+    private Set<Task> tasks = new HashSet<>();
 
-
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "class_student_table",
+            joinColumns = @JoinColumn(name = "class_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private Set<Student> students = new HashSet<>();
 }

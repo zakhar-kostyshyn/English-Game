@@ -4,8 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Entity
 @Getter
@@ -31,9 +31,10 @@ public class Task {
 
     private String status;
 
+
     @OneToMany
     @JoinTable(name = "task_condition_table",
             joinColumns = @JoinColumn(name = "task_id"),
             inverseJoinColumns = @JoinColumn(name = "condition_id"))
-    private Set<Condition> condition = new TreeSet<>();
+    private Set<Condition> condition = new HashSet<>();
 }

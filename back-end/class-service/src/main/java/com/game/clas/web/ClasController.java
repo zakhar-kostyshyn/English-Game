@@ -1,5 +1,6 @@
 package com.game.clas.web;
 
+import com.game.clas.DAO.ConnectStudent;
 import com.game.clas.DAO.CreateNewClazz;
 import com.game.clas.DAO.CreateNewCondition;
 import com.game.clas.DAO.CreateNewTask;
@@ -60,4 +61,31 @@ public class ClasController {
         return ResponseEntity.ok(teacherService.getAllTasksConditions(taskId));
     }
 
+    //  get all students by teacher
+    @GetMapping("/class/students-teacher/{teacher}")
+    public ResponseEntity<?> getAllStudentsByTeacher(@Valid @PathVariable String teacher) {
+        log.info("/class/students-teacher/{" + teacher + "} run");
+        return ResponseEntity.ok(teacherService.getAllStudent(teacher));
+    }
+
+    //  get all classes for student name
+    @GetMapping("/class/classes-student/{student}")
+    public ResponseEntity<?> getAllClassesByStudent(@Valid @PathVariable String student) {
+        log.info("/class/classes-student/{" + student + "} run");
+        return ResponseEntity.ok(teacherService.getAllClassFromStudent(student));
+    }
+
+    // get all students by class name
+    @GetMapping("/class/student-classes/{clazz}")
+    public ResponseEntity<?> getAllStudentByClass(@Valid @PathVariable String clazz) {
+        log.info("/class/student-classes/{" + clazz + "} run");
+        return ResponseEntity.ok(teacherService.getAllStudentFromClass(clazz));
+    }
+
+    //  connect Student to Class by code
+    @GetMapping("/class/connect")
+    public ResponseEntity<?> getAllStudentByClass(@Valid @RequestBody ConnectStudent connectStudent) {
+        log.info("run /class/connect/" + connectStudent);
+        return ResponseEntity.ok(teacherService.connectStudentToClass(connectStudent));
+    }
 }
