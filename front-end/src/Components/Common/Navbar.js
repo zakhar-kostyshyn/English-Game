@@ -2,25 +2,16 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import { Header, Menu, Icon} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
-
-// import styled from 'styled-components'
-
-// const StyledMenu = styled(Menu)`
-//     padding-top: 5rem;
-// `
-
+import styled from 'styled-components'
 
 class Navbar extends Component {
-
-
     render() {
         return (
 
             <header>
-
                 {/* Menu in navbar */}
                 <Menu>
-                    <Menu.Item name='home' as={Link} to='#'>
+                    <Menu.Item name='home' as={Link} to='/home'>
                         <Header>English Game</Header>
                     </Menu.Item>
                     <Menu.Menu position='right'>
@@ -32,7 +23,6 @@ class Navbar extends Component {
                         </Menu.Item>
                     </Menu.Menu>
                 </Menu>
-
             </header>
         )
     }

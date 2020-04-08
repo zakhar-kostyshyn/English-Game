@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import GameViewInterface from '../Common/GameViewInterface'
 
 class Spelling extends Component {
     render() {
         return (
             <div>
-               Hello 
+               <GameViewInterface/>
             </div>
         )
     }
