@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Stage, Text, Rect, Layer, Label, Group } from 'react-konva'
+import ChooseTheme from '../Common/ChooseTheme'
 import '../../style.css'
 
 class VocabularyGame extends Component {
 
     state = {
         gradient: null,
-        layers: ['layer-2', 'layer-1']
+        layers: ['layer-1', 'layer-2']
     }
 
     componentDidMount() {
@@ -15,13 +16,13 @@ class VocabularyGame extends Component {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
 
-        let g = ctx.createLinearGradient(0, 0, 0, 550);
+        let grad = ctx.createLinearGradient(0, 0, 0, 550);
 
-        g.addColorStop(0.00, '#6b88f2');
-        g.addColorStop(1.00, '#e3b749');
+        grad.addColorStop(0.00, '#6b88f2');
+        grad.addColorStop(1.00, '#e3b749');
 
         this.setState({
-            gradient: g
+            gradient: grad
         })
     }
 
@@ -59,6 +60,7 @@ class VocabularyGame extends Component {
                             text='Fast Vocabulary Game'
                             fontSize={70}   
                             fontFamily='Berkshire Swash'
+                            stroke='grey'
                             fill='black'/>
                         <Label 
                             x={stage.width / 2}
@@ -79,6 +81,7 @@ class VocabularyGame extends Component {
                                 text='Start'
                                 fontSize={50}   
                                 fontFamily='Berkshire Swash'
+                                stroke='grey'
                                 fill='black'/>
                         </Label>
                         <Label 
@@ -100,6 +103,7 @@ class VocabularyGame extends Component {
                                 text='Rewiev'
                                 fontSize={30}   
                                 fontFamily='Berkshire Swash'
+                                stroke='grey'
                                 fill='black'
                             />
                         </Label>
@@ -107,13 +111,7 @@ class VocabularyGame extends Component {
                 )
             case 'layer-2':
                 return (
-                    <Group>
-                        <Rect   
-                            width={stage.width}
-                            height={stage.height}
-                            fill={this.state.gradient}
-                            shadowBlur={10}/>
-                    </Group>
+                    <ChooseTheme/>
                 )
             default:
                 return('no layer');

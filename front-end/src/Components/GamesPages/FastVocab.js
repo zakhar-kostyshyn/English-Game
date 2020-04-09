@@ -8,9 +8,7 @@ class FastVocab extends Component {
 
     render() {
         return (
-            <div>
-               <GameViewInterface/> 
-            </div>
+            <GameViewInterface/> 
         )
     }
 }
