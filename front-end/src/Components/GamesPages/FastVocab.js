@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 import GameViewInterface from '../Common/GameViewInterface'
-
+import VocabularyGame from "../Games/VocabularyGame";
 
 class FastVocab extends Component {
 
     render() {
         return (
-            <GameViewInterface/> 
+            <GameViewInterface component='Vocabulary'/> 
         )
     }
 }

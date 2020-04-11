@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { Segment, Header, Container } from 'semantic-ui-react'
 import VocabularyGame from '../Games/VocabularyGame'
+import StartGame from './StartGame'
 
 const StyledParagraph = styled.p `
 
@@ -10,12 +11,13 @@ const StyledParagraph = styled.p `
 
 class GameViewInterface extends Component {
     render() {
+        console.log(this.props)
         return (
             <div>
                 <Segment placeholder>
 
                     {/* Canvas */}
-                    <VocabularyGame/>
+                    <StartGame component={this.props.component}/>
 
 
                     <Header>{this.props.name} Game</Header>

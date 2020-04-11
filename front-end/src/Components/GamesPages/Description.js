@@ -6,7 +6,7 @@ class Description extends Component {
     render() {
         return (
             <div>
-               <GameViewInterface/>
+               <GameViewInterface component='Description'/>
             </div>
         )
     }

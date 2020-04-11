@@ -6,7 +6,7 @@ class Numbers extends Component {
     render() {
         return (
             <div>
-               <GameViewInterface/>
+               <GameViewInterface component='Numbers'/>
             </div>
         )
     }

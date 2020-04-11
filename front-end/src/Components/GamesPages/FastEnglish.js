@@ -6,7 +6,7 @@ class FastEnglish extends Component {
     render() {
         return (
             <div>
-               <GameViewInterface/>
+               <GameViewInterface component='FastEnglish'/>
             </div>
         )
     }

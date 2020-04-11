@@ -25,11 +25,6 @@ class ChooseTheme extends Component {
             gradient: grad
         })
     }
-
-    onMouseOver = e => {
-        console.log(e.target)
-    }
-
     render() {
 
         //  stage data for canvas
@@ -70,8 +65,8 @@ class ChooseTheme extends Component {
        
                                 {/* create labels using data from state */}
                                 {this.state.allLabels.map(l => (
-                                    <Label  x={l.xx} y={l.yy} key={l.id} >
-                                        <RectHiglight name={l.name}/>
+                                    <Label  x={l.xx} y={l.yy} key={l.id}>
+                                        <RectHiglight setTheme={this.props.setTheme} name={l.name}/>
                                     </Label> 
                                 )) }
                         </Label>
@@ -122,3 +117,4 @@ const labes = () => {
 }
 
 export default ChooseTheme
+

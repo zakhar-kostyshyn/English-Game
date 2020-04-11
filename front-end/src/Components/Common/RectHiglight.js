@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Konva from 'konva';
 import { Rect, Group, Text } from 'react-konva'
 
 class RectHiglight extends Component {
@@ -8,7 +9,8 @@ class RectHiglight extends Component {
         rectShadowX: 1,
         rectShadowY: 1,
         rectscaleX: 1,
-        rectscaleY: 1
+        rectscaleY: 1,
+        duration: 0
     }
 
     onMouseOver = () => {
@@ -28,8 +30,14 @@ class RectHiglight extends Component {
             rectShadowX: 1,
             rectShadowY: 1,
             rectscaleX: 1,
-            rectscaleY: 1 
+            rectscaleY: 1,
+            duration: 0.5 
         })
+    }
+
+    //  using setTheme from ...Game to set game's state with label name
+    onClickLabel = () => {
+        this.props.setTheme(this.props.name)
     }
     
     render() {
@@ -43,10 +51,12 @@ class RectHiglight extends Component {
                     fill={this.state.rectColor}
                     stroke='black'
                     strokeWidth={5}
+                    duration={this.state.duration}
                     shadowOffsetX={this.state.rectShadowX}
                     shadowOffsetY={this.state.rectShadowY}
                     scaleX={this.state.rectscaleX}
                     scaleY={this.state.rectscaleY}
+                    onClick={this.onClickLabel}
                     onMouseOut={this.onMouseOut}
                     onMouseOver={this.onMouseOver}/> 
                 <Text
@@ -57,6 +67,7 @@ class RectHiglight extends Component {
                     fontSize={20}   
                     fontFamily='Berkshire Swash'
                     fill='black'
+                    onClick={this.onClickLabel}
                     onMouseOut={this.onMouseOut}
                     onMouseOver={this.onMouseOver}
                     text={this.props.name}/>

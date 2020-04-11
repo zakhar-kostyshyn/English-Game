@@ -6,7 +6,7 @@ class Time extends Component {
     render() {
         return (
             <div>
-               <GameViewInterface/>
+               <GameViewInterface component='Time'/>
             </div>
         )
     }

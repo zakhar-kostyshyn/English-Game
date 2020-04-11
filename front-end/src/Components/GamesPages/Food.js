@@ -6,7 +6,7 @@ class Food extends Component {
     render() {
         return (
             <div>
-               <GameViewInterface/>
+               <GameViewInterface component='Food'/>
             </div>
         )
     }

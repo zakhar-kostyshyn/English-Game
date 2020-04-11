@@ -6,7 +6,7 @@ class Spelling extends Component {
     render() {
         return (
             <div>
-               <GameViewInterface/>
+               <GameViewInterface component='Spelling'/>
             </div>
         )
     }

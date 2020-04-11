@@ -6,7 +6,7 @@ class FastPharases extends Component {
     render() {
         return (
             <div>
-               <GameViewInterface/>
+               <GameViewInterface component='FastPharases'/>
             </div>
         )
     }
