@@ -30,7 +30,6 @@ public class Image {
     private String theme;
 
     @Lob
-    @JsonIgnore
     private byte [] image;
 
 }

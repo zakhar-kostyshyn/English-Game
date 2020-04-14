@@ -41,12 +41,13 @@ public class ImageService {
                         e.printStackTrace();
                     }
 
-                    assert newImage != null;
-                    log.info("new Image created and save ");
+
 
                     //  save Image if it no exist
-                    if (!imageRepository.existsByName(newImage.getName()))
+                    if (!imageRepository.existsByName(newImage.getName())) {
+                        log.info("new Image created and save ");
                         imageRepository.save(newImage);
+                    }
                 }));
     }
 
