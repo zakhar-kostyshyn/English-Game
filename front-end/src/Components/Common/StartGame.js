@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Stage, Text, Rect, Layer, Label, Group } from 'react-konva'
 import ChooseTheme from './ChooseTheme'
 import VocabularyGame from '../Games/VocabularyGame'
+import VocabularyGame2 from '../Games/VocabularyGame2'
+import { getTheme, getImage } from '../../Actions/ImageAction'
 import '../../style.css'
 
 class StartGame extends Component {
@@ -16,7 +18,7 @@ class StartGame extends Component {
         theme: "",
 
         //  canvas layers
-        layers: ['layer-2', 'layer-1', 'layer-3']
+        layers: ['layer-3', 'layer-1', 'layer-2']
     }
 
     componentDidMount() {
@@ -35,6 +37,7 @@ class StartGame extends Component {
         })
     }
 
+
     //  change array of layers, remove input layer and insert in the end of array
     //  to display on canvas
     //  after all action set array to state
@@ -52,12 +55,21 @@ class StartGame extends Component {
     //  set theme from RectHiglight component and this func set 
     //  into props of ChooseTheme and then into RectHiglight, baddd.
     //  but I don't wanna use redux here
+
+    //  after getting theme calls action ImageAction and 
+    //  set into reducer state all images from theme
+
+    //  change layer
     setTheme = themeName => {
         this.setState({
             theme: themeName
         })
 
-        this.changeLayer('layer-3')
+        //  get theme into ImageReducers state from back-end 
+        this.props.getTheme(this.state.theme.toLowerCase())
+    
+        //  change layer on main
+        this.changeLayer('layer-3')        
     }
     
 
@@ -69,11 +81,11 @@ class StartGame extends Component {
         switch(this.props.component) {
             case 'Vocabulary':
                 return (
-                    <VocabularyGame theme={this.state.theme}/>
+                    //  give all images for component which represent layer-3
+                    <VocabularyGame images={this.props.images} />
                 )
             //  TODO more cases for each game
             default:
-                console.log('no game')
                 return('no game')
         }
     }
@@ -167,12 +179,11 @@ class StartGame extends Component {
                     </Group>
                 )    
             default:
-                console.log('no layer')
                 return('no layer');
         }
     }
 
-    render() { 
+    render() {         
         return (
             <Stage width={900} height={550}>
                 {this.state.layers.map(layer => ( 
@@ -185,5 +196,8 @@ class StartGame extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    images: state.ImageReducer.images
+})
 
-export default connect(null)(StartGame)
+export default connect(mapStateToProps, { getTheme })(StartGame)

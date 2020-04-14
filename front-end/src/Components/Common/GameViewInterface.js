@@ -11,7 +11,6 @@ const StyledParagraph = styled.p `
 
 class GameViewInterface extends Component {
     render() {
-        console.log(this.props)
         return (
             <div>
                 <Segment placeholder>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Konva from 'konva';
 import { Rect, Group, Text } from 'react-konva'
 
 class RectHiglight extends Component {
