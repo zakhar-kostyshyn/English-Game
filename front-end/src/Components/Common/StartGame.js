@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { Stage, Text, Rect, Layer, Label, Group } from 'react-konva'
 import ChooseTheme from './ChooseTheme'
 import VocabularyGame from '../Games/VocabularyGame'
-import VocabularyGame2 from '../Games/VocabularyGame2'
 import { getTheme, getImage } from '../../Actions/ImageAction'
 import '../../style.css'
 

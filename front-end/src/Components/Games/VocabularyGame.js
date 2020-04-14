@@ -24,7 +24,19 @@ class VocabularyGame extends Component {
         //  tree random image from all image
         workingImages: [],
      
-        shuffle: []
+        //  using get random display of name's circles using in reIndex method
+        shuffle: [{
+            index: 0,
+            canUse: true
+        },{
+            index: 1,
+            canUse: true
+        },{
+            index: 2,
+            canUse: true
+        }],
+
+        
     }
 
     onDragEnd = e => {
@@ -45,10 +57,12 @@ class VocabularyGame extends Component {
 
         const circle = this.state.circles
         
+        //  drag and drag's placholder counting
         for (let i = 0; i < 3; i++) {
+
             let calibratiopnCatch = 150
 
-            let x = 250 + circle.indentBetween * this.state.workingImages[i].index
+            let x = 250 + circle.indentBetween * this.state.shuffle[i].index
             let y = 150 + circle.indentDown
 
             let leftBorders = x - circle.width + calibratiopnCatch
@@ -56,8 +70,12 @@ class VocabularyGame extends Component {
             let topBorders = y - circle.height + calibratiopnCatch
             let bottomBorders = y + circle.height - calibratiopnCatch
 
+            // console.log(this.state.shuffle)
+            // console.log(this.state.workingImages[this.state.shuffle[i].index].name)
+
             //  check drag catch 
             //  first line check cordinate and second names
+            //  this.state.shuffle[i].index because second line circles depend on 
             if (pos.x > leftBorders && pos.x < rightBorders && pos.y > topBorders && pos.y < bottomBorders &&
                 e.target.name() == this.state.workingImages[i].name) {
 
@@ -93,6 +111,15 @@ class VocabularyGame extends Component {
                 })  
             }
         }
+
+        // should sort workingImages in the end because we push draged image on the top of workingImages
+        // and should place on the right
+        let sortWorkingArr = this.state.workingImages
+
+        sortWorkingArr = sortWorkingArr.sort((a, b) => (a.index > b.index) ? 1 : ((b.index > a.index) ? -1 : 0))
+        this.setState({
+            workingImages: sortWorkingArr
+        })  
     }
 
     componentDidMount() {
@@ -137,12 +164,7 @@ class VocabularyGame extends Component {
         const loadImage = img => {
             let newImage
 
-            newImage = new window.Image();
-
-            //  sometime method can returned quicker then src will be populate/
-            //  so here i am using promise
-
-            
+            newImage = new window.Image();            
             newImage.src = `data:image/png;base64,${img}`
             return newImage
         }
@@ -158,6 +180,44 @@ class VocabularyGame extends Component {
             return name
         }
 
+        //  in purpose to shuffle text circles
+        const reIndex = () => {
+
+            let tempArray = this.state.shuffle
+
+            //  this code work
+            for (let i = 0; i < 3; i++) 
+                while (true) {
+
+                    let random = Math.round(Math.random() * 2) 
+
+                    let noSuchRandom = true
+
+                    //  check if it is object with such index and canUse = false
+                    for (let i = 0; i < 3; i++) 
+                        if (tempArray[i].index == random && tempArray[i].canUse == false)
+                            noSuchRandom = false
+                    
+                    if (!noSuchRandom) continue
+
+                    //  find obj which never used
+                    for (let i = 0; i < 3; i++)
+                        if (tempArray[i].canUse) {
+                            tempArray[i].canUse = false
+                            tempArray[i].index = random
+                            noSuchRandom = false
+                            break
+                        }
+
+                    if (!noSuchRandom) break
+
+                }
+            
+            this.setState({
+                shuffle: tempArray
+            })
+        }
+
         let i = 0
         while (i++ < 3) {
             
@@ -167,8 +227,10 @@ class VocabularyGame extends Component {
                 index: i - 1,
                 image: loadImage(this.props.images[randomIndex].image),
                 name: formatName(this.props.images[randomIndex].name),
-                visibility: true
+                visibility: true,
             })
+
+
 
                // console.log(this.state.allImage) undefined
 
@@ -178,21 +240,12 @@ class VocabularyGame extends Component {
                 // })
             }
 
+        reIndex()
+
         this.setState({
             workingImages: tempTreeRandomImagesObjArray
         })
 
-    } 
-
-    reIndex = index => {
-        let shuffleIndex
-        while (true) {
-            shuffleIndex = Math.abs(index - Math.round(Math.random() * 2))
-            if (!this.state.shuffle.includes(shuffleIndex)) 
-                break
-        }
-
-        return shuffleIndex;
     } 
 
     render() {
@@ -201,6 +254,7 @@ class VocabularyGame extends Component {
             width: 900,
             height: 550
         }
+
         const circle = this.state.circles
         if (this.props.images.length != 0 && this.state.workingImages.length != 0) {
             return (
@@ -217,7 +271,7 @@ class VocabularyGame extends Component {
                         <Label
                             key={imageObject.index}
                             name={imageObject.name}
-                            x={this.state.position.x + circle.indentBetween * this.reIndex(imageObject.index)}
+                            x={this.state.position.x + circle.indentBetween * this.state.shuffle[imageObject.index].index}
                             y={this.state.position.y + circle.indentDown}>
 
                             <Circle 
@@ -259,30 +313,32 @@ class VocabularyGame extends Component {
                         </Label>
                     ))}
 
-                    {/* drawing second line of text circles */}
+                    {/* drawing first line of text circles */}
                     {this.state.workingImages.map(imageObject => (
                         <Label
                             key={imageObject.index}
                             name={imageObject.name}
+                            index={imageObject.index}
                             x={this.state.position.x + circle.indentBetween * imageObject.index}
                             y={this.state.position.y}
+                            onDragStart={this.onDragStart}
                             onDragEnd={this.onDragEnd}
-                            draggable>
-                        
-
+                            onMouseOver={this.onMouseOver}
+                            onMouseLeave={this.onMouseLeave}
+                            visible={imageObject.visibility && !imageObject.dragObj.v}
+                            draggable>    
+                                
                             <Circle 
                                 width={circle.width}
                                 height={circle.height} 
                                 fill='white'  
                                 stroke='black'
                                 strokeWidth={5}
-                                visible={imageObject.visibility}
                                 />
 
                             <Circle    
                                 width={circle.width - 10}
-                                height={circle.height - 10}  
-                                visible={imageObject.visibility}          
+                                height={circle.height - 10}        
                                 fillPatternImage={imageObject.image}
                                 fillPatternX={0}
                                 fillPatternY={0}
@@ -292,9 +348,9 @@ class VocabularyGame extends Component {
                                 fillPatternOffsetX={200}
                                 fillPatternOffsetY={180}
                                 />
-
                         </Label>
                     ))}
+
                 </Label>
             )
         } else 
@@ -330,4 +386,4 @@ class VocabularyGame extends Component {
     }
 }
 
-export default VocabularyGame2
+export default VocabularyGame
