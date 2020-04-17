@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Circle, Text, Rect, Image, Label, Group } from 'react-konva'
 import '../../style.css'
+import ScoreTime from './ScoreTime'
+
 
 class VocabularyGame extends Component {
 
@@ -15,7 +17,18 @@ class VocabularyGame extends Component {
         //  using get random display of name's circles using in reIndex method
         shuffle: [],
 
-        image: null
+        // score-update state
+        update: 0,
+        error: 0,
+        pause: 0,
+
+        greeting: ['Well done', 'Perfect', 'Briliant', 'Unbelivable', 'Incredibly', 'Good Job', 'Master'],
+        isGreet: false
+
+
+    }
+
+    onPause = () => {
 
     }
 
@@ -73,10 +86,15 @@ class VocabularyGame extends Component {
             let bottomBorders = y + secondLine[i].height - calibratiopnCatch
 
             //  check catching
-            if (pos.x > leftBorders && pos.x < rightBorders && pos.y > topBorders && pos.y < bottomBorders &&
-                e.target.name() == secondLine[i].name) {
+            if (pos.x > leftBorders && pos.x < rightBorders && pos.y > topBorders && pos.y < bottomBorders) {
+                if (e.target.name() == secondLine[i].name) {
 
                     console.log(secondLine[i].name + " catched ")
+
+                    //  update score and time indicate right unswer
+                    this.setState({
+                        update: ++this.state.update
+                    })
 
                     //  change visibility to hide image circl and show image on text circle
                     this.setState({
@@ -94,13 +112,21 @@ class VocabularyGame extends Component {
                             this.populateWithRandomImage()
                     }
 
+
+                } else {
+                    //  here we write logic if player make wrong desision names are not equal
+                    //  we just indicate this like with update
+                    this.setState({
+                        error: ++this.state.error
+                    })
                 }
+            }
         }
 
         //  back to start circle's position
         this.setState({
             firstLineImages: this.state.firstLineImages
-                .map(image => (image.index == e.target.attrs.index ? {...image, x: 250 + 220 * image.index, y: 150} : image)),
+                .map(image => (image.index == e.target.attrs.index ? {...image, x: 250 + 190 * image.index, y: 150} : image)),
                 
         })
 
@@ -216,18 +242,17 @@ class VocabularyGame extends Component {
                         if (firstLine.find(image => image.name == formatName(state.allImages[randomIndex].name)) != undefined) {
                             i--
                             continue
-                    }
-
-                    const img = new window.Image()
+                    }                   
                     //  error can cause here because image don't load
-                    img.src = `data:image/png;base64,${state.allImages[randomIndex].image}`
-                   
+                    const img = new window.Image()
+                    img.src = `data:image/png;base64,${state.allImages[randomIndex].image}` 
+                    
                     firstLine.push  ({
                         //  counting x for every circle depends on index
-                        x: 250 + 220 * i,
+                        x: 250 + 190 * i,
                         y: 150,
-                        width: 190,
-                        height: 190,
+                        width: 160,
+                        height: 160,
                         index: i,
                         image: img,
                         name: formatName(state.allImages[randomIndex].name),
@@ -236,16 +261,15 @@ class VocabularyGame extends Component {
 
                     secondLine.push({
                         //  shuffle before set x
-                        x: 250 + 220 * state.shuffle[i].index,
-                        y: 350,
-                        width: 190,
-                        height: 190,
+                        x: 250 + 190 * state.shuffle[i].index,
+                        y: 330,
+                        width: 160,
+                        height: 160,
                         index: state.shuffle[i].index,
                         image: img,
                         name: formatName(state.allImages[randomIndex].name),
                         visibility: true
                     })
-                
                 }
 
                 this.setState({
@@ -274,12 +298,24 @@ class VocabularyGame extends Component {
         if (this.state.allImages.length > 0 && this.state.firstLineImages.length > 0 && this.state.secondLineImages.length > 0) {
             return (
                 <Label>
+
                     {/* background */}
                     <Rect   
                         width={stage.width}
                         height={stage.height}
                         fill={this.state.gradient}
                         shadowBlur={10}/>
+
+                    {/* pause */}
+                    <Rect 
+                        x={850}
+                        y={10}
+                        onClick={this.onPause}
+                    />
+
+                    {/* score and time functional    */}
+                    <ScoreTime update={this.state.update} error={this.state.error}/>
+                        
 
                     {/* second line drawing */}
                     {this.state.secondLineImages.map(image => (
@@ -305,7 +341,7 @@ class VocabularyGame extends Component {
                                 height={image.height}            
                                 offsetX={image.width / 2}
                                 offsetY={image.height / 2}
-                                fontSize={30}   
+                                fontSize={25}   
                                 fontFamily='Berkshire Swash'
                                 fill='black'
                                 visible={image.visibility}
@@ -319,8 +355,8 @@ class VocabularyGame extends Component {
                                 fillPatternImage={image.image}
                                 fillPatternX={0}
                                 fillPatternY={0}
-                                fillPatternScaleX={0.4}
-                                fillPatternScaleY={0.4}
+                                fillPatternScaleX={0.3}
+                                fillPatternScaleY={0.3}
                                 fillPatternRepeat='no-repeat'
                                 fillPatternOffsetX={200}
                                 fillPatternOffsetY={180}
@@ -355,8 +391,8 @@ class VocabularyGame extends Component {
                                 fillPatternImage={image.image}
                                 fillPatternX={0}
                                 fillPatternY={0}
-                                fillPatternScaleX={0.4}
-                                fillPatternScaleY={0.4}
+                                fillPatternScaleX={0.3}
+                                fillPatternScaleY={0.3}
                                 fillPatternRepeat='no-repeat'
                                 fillPatternOffsetX={200}
                                 fillPatternOffsetY={180}
@@ -400,4 +436,4 @@ class VocabularyGame extends Component {
     }
 }
 
-export default VocabularyGame3
+export default VocabularyGame

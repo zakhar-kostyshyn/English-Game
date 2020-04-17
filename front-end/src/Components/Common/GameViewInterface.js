@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Segment, Header, Container } from 'semantic-ui-react'
 import VocabularyGame from '../Games/VocabularyGame'
 import StartGame from './StartGame'
+import {SayButton} from 'react-say'
 
 const StyledParagraph = styled.p `
 
@@ -14,6 +15,9 @@ class GameViewInterface extends Component {
         return (
             <div>
                 <Segment placeholder>
+
+                    {/* say what player take */}
+                    {/* <SayButton speak="test"/> */}
 
                     {/* Canvas */}
                     <StartGame component={this.props.component}/>
