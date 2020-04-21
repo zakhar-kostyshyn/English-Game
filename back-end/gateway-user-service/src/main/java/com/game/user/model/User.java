@@ -17,8 +17,7 @@ import java.util.Set;
 @ToString
 @Builder
 @Table(name = "users_table", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "password")
+        @UniqueConstraint(columnNames = "username")
 })
 public class User {
 
@@ -39,7 +38,7 @@ public class User {
     private String username;
 
     @NotBlank(message = "Field 'password' must be filled")
-    @Size(max = 40)
+    @Size(min = 5, max = 100)
     private String password;
 
     @Email(message = "This is not email, please enter correct data")

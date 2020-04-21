@@ -17,7 +17,7 @@ class StartGame extends Component {
         theme: "",
 
         //  canvas layers
-        layers: ['layer-3', 'layer-1', 'layer-2']
+        layers: ['layer-3', 'layer-2', 'layer-1']
     }
 
     componentDidMount() {
@@ -82,7 +82,7 @@ class StartGame extends Component {
             case 'Vocabulary':
                 return (
                     //  give all images for component which represent layer-3
-                    <VocabularyGame images={this.props.images} />
+                    <VocabularyGame images={this.props.images} changeLayer={this.changeLayer}/>
                 )
             //  TODO more cases for each game
             default:

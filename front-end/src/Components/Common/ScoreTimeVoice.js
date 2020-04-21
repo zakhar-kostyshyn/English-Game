@@ -1,36 +1,46 @@
 import React, { Component } from 'react'
 import { Circle, Text, Rect, Image, Label, Group } from 'react-konva'
 
-class ScoreTime extends Component {
+class ScoreTimeVoice extends Component {
 
     state = {
         score: 0,
         scoreArray: [],
         markIndex: 0,
         time: 0,
-
+        say: "",
+        voice: null,
+        stop: false
     }
 
     //  create timer
     tick = () => {
-        new Promise(res => {      
-            this.setState({
-                time: this.state.time + 0.1
-            })
-            setTimeout(() => {
-                res()
-            }, 100)
-        }).then(() => {
-            this.tick()
-        })
+            //  tick if is not a pause and don't stop to go back
+            if (!this.props.pause && !this.state.stop) {
+
+                new Promise(res => {      
+                    this.setState({
+                        time: this.state.time + 0.1
+                    })
+                    setTimeout(() => {
+                        res()  
+                    }, 100)
+                }).then(() => {
+                    this.tick(!this.state.stop)
+                })
+            }
+            
+        
     }
 
+    //  restart timer
     restart = () => {
         this.setState({
             time: 0
         })
     }
 
+    //  create array of score streak which responsible for side table
     createScoreArray = () => {
         let tempArray = []
 
@@ -46,14 +56,36 @@ class ScoreTime extends Component {
 
     componentDidMount() {
          //  start timer
-        this.tick()
+        this.tick(false)
 
         //  create start score
         this.createScoreArray()
+
+        //  intilize voice
+        let voices = window.speechSynthesis.getVoices();
+        this.setState({
+            voice: voices.filter(voice => { 
+                return voice.name == 'Lisa';        //  dont work return undefined
+            })[0]
+        })
+
     }
 
     countingScore = () => Math.trunc(1000 + this.state.markIndex * 100 - this.state.time * 10)
         
+    //  back to layer-1
+    componentWillUnmount(){
+        this.setState({
+            score: 0,
+            scoreArray: [],
+            markIndex: 0,
+            time: 0,
+            say: "",
+            voice: null,
+            //  stop timer give true in props
+            stop: true
+        })
+    }
 
     componentDidUpdate(prevProps) {
 
@@ -61,8 +93,16 @@ class ScoreTime extends Component {
         if (prevProps.update < this.props.update) {
             this.restart()
             this.setState({
-                markIndex: ++this.state.markIndex,
-                score: this.countingScore()
+                //  add index only streak only if it less then 10
+                markIndex: this.state.markIndex < 10 ? ++this.state.markIndex : this.state.markIndex,
+                score: this.countingScore(),
+                 //  save word which sayed
+                say: this.props.say
+            }, () => {
+                //  catch name to say
+                let utterance = new SpeechSynthesisUtterance(this.state.say);
+                utterance.voice = this.state.voice
+                speechSynthesis.speak(utterance)
             })
             //  recreate array score to show right colum
             this.createScoreArray()
@@ -70,13 +110,27 @@ class ScoreTime extends Component {
 
         //  catch if player make wrong choose
         if (prevProps.error < this.props.error) {
+
             this.setState({
                 score: this.state.score - 100,
-                markIndex: --this.state.markIndex
+                markIndex: --this.state.markIndex,
+                // say: this.props.say
+            }, () => {
+                //  catch name to say           (say wrong even if player didn't do error, because palyer didn't put on right place)
+                // let utterance = new SpeechSynthesisUtterance('wrong');
+                // utterance.voice = this.state.voice
+                // speechSynthesis.speak(utterance)
             })
+
             this.createScoreArray()
         }
-  
+
+        //  if unset continue ticks()
+        if (prevProps.pause != this.props.pause) 
+            if (!this.props.pause) 
+                this.tick(false)
+
+      
     }
 
     render() {        
@@ -207,4 +261,4 @@ class ScoreTime extends Component {
     }
 }
 
-export default ScoreTime
+export default ScoreTimeVoice

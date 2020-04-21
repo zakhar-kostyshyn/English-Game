@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Circle, Text, Rect, Image, Label, Group } from 'react-konva'
 import '../../style.css'
-import ScoreTime from './ScoreTime'
+import ScoreTimeVoice from '../Common/ScoreTimeVoice'
+import RecordTable from '../Common/RecordTable'
 
 
 class VocabularyGame extends Component {
@@ -17,19 +18,45 @@ class VocabularyGame extends Component {
         //  using get random display of name's circles using in reIndex method
         shuffle: [],
 
-        // score-update state
+        // score-update-voice state
         update: 0,
         error: 0,
         pause: 0,
+        say: "Hello",
+        pause: false,
 
-        greeting: ['Well done', 'Perfect', 'Briliant', 'Unbelivable', 'Incredibly', 'Good Job', 'Master'],
-        isGreet: false
-
+        round: 0
 
     }
 
-    onPause = () => {
+    //  indicate pause
+    onPause = () => this.setState({pause: this.state.pause ? false : true})
 
+    //  reset state before go to the layer-1 or layer-4
+    reset = () => {
+        //  delete all
+        this.setState({
+            allImages: [],
+            firstLineImages: [],
+            secondLineImages: [],
+            shuffle: [],
+            update: 0,
+            error: 0,
+            pause: 0,
+            say: "Hello",
+            pause: false,
+            round: 0
+        })
+    }
+
+    //  change layer in StartGame Component
+    onBack = () => {
+        this.reset()
+        this.props.changeLayer('layer-1')
+    }
+
+    endGame = () => {
+        this.props.changeLayer('layer-4')
     }
 
     onDragStart = e => {
@@ -86,14 +113,13 @@ class VocabularyGame extends Component {
             let bottomBorders = y + secondLine[i].height - calibratiopnCatch
 
             //  check catching
-            if (pos.x > leftBorders && pos.x < rightBorders && pos.y > topBorders && pos.y < bottomBorders) {
+            if (pos.x >= leftBorders && pos.x <= rightBorders && pos.y >= topBorders && pos.y <= bottomBorders) {
                 if (e.target.name() == secondLine[i].name) {
 
-                    console.log(secondLine[i].name + " catched ")
-
-                    //  update score and time indicate right unswer
+                    //  update score and time indicate right unswer and save name to say
                     this.setState({
-                        update: ++this.state.update
+                        update: ++this.state.update,
+                        say: e.target.name()
                     })
 
                     //  change visibility to hide image circl and show image on text circle
@@ -105,17 +131,17 @@ class VocabularyGame extends Component {
                     })
 
                     //  check if all images are on their places
-                    for (let j = 0; j < 3; j++) {
+                    for (let j = 0; j < 3; j++) 
                         if (this.state.firstLineImages[j].visibility)
                             break;
-                        else if (j == 2)
+                        else if (j == 2) 
+                            //  populate with new images 
                             this.populateWithRandomImage()
-                    }
-
-
+                        
                 } else {
                     //  here we write logic if player make wrong desision names are not equal
                     //  we just indicate this like with update
+                    console.log("here")
                     this.setState({
                         error: ++this.state.error
                     })
@@ -151,7 +177,7 @@ class VocabularyGame extends Component {
     componentDidUpdate() {
         if (this.props.images.length > 0 && this.state.allImages.length == 0) {
             this.setState({
-                allImages : this.props.images 
+                allImages : this.props.images
             }, () => {
                 this.populateWithRandomImage()
             })
@@ -159,6 +185,21 @@ class VocabularyGame extends Component {
     }
 
     populateWithRandomImage = () => {
+
+        //  when we end round 5 we will go to the score table
+        if (this.state.round == 6) {
+
+            // TODO catch end of the game and all inforamation
+            // reset state
+            this.reset()
+
+            //  stop 
+            return
+        } else 
+            //  increment round of game every time 
+            this.setState({
+                round: ++this.state.round
+            })
 
 
         let firstLine = []
@@ -286,7 +327,6 @@ class VocabularyGame extends Component {
         })
     }
 
-
     render() {
 
         const stage = {
@@ -306,15 +346,94 @@ class VocabularyGame extends Component {
                         fill={this.state.gradient}
                         shadowBlur={10}/>
 
-                    {/* pause */}
-                    <Rect 
-                        x={850}
-                        y={10}
-                        onClick={this.onPause}
-                    />
+                    {/* PAUSE */}
+                    <Label
+                        x={40}
+                        y={20}>
 
-                    {/* score and time functional    */}
-                    <ScoreTime update={this.state.update} error={this.state.error}/>
+                        <Rect 
+                            width={100}
+                            height={70}
+                            fill={this.state.pause ? 'red' : 'green'}
+                            onClick={this.onPause}
+                            stroke='black'
+                            strokeWidth={5}
+                            cornerRadius={5}
+                        />
+
+                        <Text
+                            width={100}
+                            height={70}
+                            align='center'
+                            verticalAlign='middle'
+                            fontSize={20}   
+                            fontFamily='Berkshire Swash'
+                            fill={this.state.pause ? 'black' : 'white'}
+                            text='Pause'
+                            onClick={this.onPause}
+                        />
+                    </Label> 
+
+                    {/* BACK */}
+                    <Label
+                        x={40}
+                        y={115}>
+
+                        <Rect 
+                            width={100}
+                            height={70}
+                            fill='brown'
+                            stroke='black'
+                            strokeWidth={5}
+                            cornerRadius={5}
+                        />
+
+                        <Text
+                            width={100}
+                            height={70}
+                            align='center'
+                            verticalAlign='middle'
+                            fontSize={20}   
+                            fontFamily='Berkshire Swash'
+                            fill='white'
+                            text='Back'
+                            onClick={this.onBack}
+                        />
+                    </Label> 
+
+                    {/* ROUND */}
+                    <Label
+                        x={40}
+                        y={210}>
+
+                        <Rect 
+                            width={100}
+                            height={70}
+                            fill='blue'
+                            stroke='black'
+                            strokeWidth={5}
+                            cornerRadius={5}
+                        />
+
+                        <Text
+                            width={100}
+                            height={70}
+                            align='center'
+                            verticalAlign='middle'
+                            fontSize={20}   
+                            fontFamily='Berkshire Swash'
+                            fill='white'
+                            text={this.state.round}
+                        />
+                    </Label> 
+
+                    {/* score voice and time functional    */}
+                    <ScoreTimeVoice 
+                        update={this.state.update} 
+                        error={this.state.error} 
+                        say={this.state.say}
+                        pause={this.state.pause}
+                    />
                         
 
                     {/* second line drawing */}
@@ -375,7 +494,7 @@ class VocabularyGame extends Component {
                             onDragStart={this.onDragStart}
                             onDragEnd={this.onDragEnd}
                             visible={image.visibility}
-                            draggable>    
+                            draggable={!this.state.pause}>    
                                 
                             <Circle 
                                 width={image.width}
@@ -399,6 +518,12 @@ class VocabularyGame extends Component {
                                 />
                         </Label>
                     ))}
+
+
+
+                    {/* show  table with score if ther is 6 round */}
+                    {this.state.round == 6 ? <RecordTable/> : null}
+
 
                 </Label>
             )
