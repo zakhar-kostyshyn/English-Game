@@ -6,28 +6,39 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="user" />
         <module name="gateway-service" />
+        <module name="discovery-server" />
         <module name="class-service" />
-        <module name="game-service" />
+        <module name="config-service" />
+        <module name="clas" />
+        <module name="game" />
         <module name="eureka-service" />
         <module name="user-service" />
-        <module name="discovery-server" />
-        <module name="config-service" />
+        <module name="game-service" />
+        <module name="discovery" />
+        <module name="config" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="auth_resource-service" target="11" />
       <module name="auth_server-service" target="11" />
+      <module name="clas" target="11" />
       <module name="class-service" target="11" />
+      <module name="config" target="11" />
       <module name="config-server" target="11" />
       <module name="config-service" target="11" />
       <module name="discover-service" target="11" />
+      <module name="discovery" target="11" />
       <module name="discovery-server" target="11" />
       <module name="eureka-service" target="11" />
+      <module name="game" target="11" />
       <module name="game-service" target="11" />
+      <module name="gateway" target="11" />
       <module name="gateway-service" target="11" />
       <module name="student-service" target="11" />
       <module name="teacher-service" target="11" />
+      <module name="user" target="11" />
       <module name="user-service" target="11" />
       <module name="user-sevice" target="11" />
       <module name="zuul-service" target="11" />
@@ -37,16 +48,22 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="auth_resource-service" options="-parameters" />
       <module name="auth_server-service" options="-parameters" />
+      <module name="clas" options="-parameters" />
       <module name="class-service" options="-parameters" />
+      <module name="config" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="config-service" options="-parameters" />
       <module name="discover-service" options="-parameters" />
+      <module name="discovery" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="eureka-service" options="-parameters" />
+      <module name="game" options="-parameters" />
       <module name="game-service" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="student-service" options="-parameters" />
       <module name="teacher-service" options="-parameters" />
+      <module name="user" options="-parameters" />
       <module name="user-service" options="-parameters" />
       <module name="user-sevice" options="-parameters" />
       <module name="zuul-service" options="-parameters" />

@@ -2,6 +2,7 @@ package com.game.game.web;
 
 import com.game.game.DAO.CreateNewMessage;
 import com.game.game.DAO.CreateNewReply;
+import com.game.game.ImageServiceRunner;
 import com.game.game.service.ChatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import javax.validation.Valid;
 @RestController
 @Slf4j
 public class ChatController {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ChatController.class);
 
     @Autowired
     private ChatService chatService;

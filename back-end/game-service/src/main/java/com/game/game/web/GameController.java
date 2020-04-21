@@ -1,6 +1,7 @@
 package com.game.game.web;
 
 import com.game.game.DAO.CreateNewUserScore;
+import com.game.game.ImageServiceRunner;
 import com.game.game.service.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import javax.validation.Valid;
 @RestController
 @Slf4j
 public class GameController {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GameController.class);
 
     @Autowired
     private GameService gameService;

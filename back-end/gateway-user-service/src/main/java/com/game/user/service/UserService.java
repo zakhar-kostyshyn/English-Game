@@ -1,6 +1,7 @@
 package com.game.user.service;
 
 import com.game.user.DAO.CreateUser;
+import com.game.user.DAO.LoginUser;
 import com.game.user.model.ERoles;
 import com.game.user.model.Role;
 import com.game.user.model.User;
@@ -8,6 +9,8 @@ import com.game.user.repository.RoleRepository;
 import com.game.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -85,5 +88,19 @@ public class UserService {
         log.info("new User : " + createdUser);
 
         return  createdUser;
+    }
+
+    //  login user
+    public String loginUser(LoginUser login) {
+
+        //  create Authentication using password and login
+        UsernamePasswordAuthenticationToken userToken =
+                new UsernamePasswordAuthenticationToken(login.getLogin(), login.getPassword());
+
+
+
+
+
+        return "test";
     }
 }

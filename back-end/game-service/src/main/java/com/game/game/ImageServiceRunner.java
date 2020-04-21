@@ -1,6 +1,7 @@
 package com.game.game;
 
 import com.game.game.service.ImageService;
+import com.game.game.web.ImageController;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,8 @@ import java.util.*;
 @Getter
 @Slf4j
 public class ImageServiceRunner implements CommandLineRunner {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImageServiceRunner.class);
 
     @Autowired
     private ImageService imageService;

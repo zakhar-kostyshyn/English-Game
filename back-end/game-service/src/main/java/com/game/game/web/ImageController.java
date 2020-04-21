@@ -16,6 +16,8 @@ import javax.validation.Valid;
 @CrossOrigin("*")
 public class ImageController {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImageController.class);
+
     @Autowired
     private ImageService imageService;
 
