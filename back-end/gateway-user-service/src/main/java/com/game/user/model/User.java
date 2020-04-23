@@ -26,27 +26,23 @@ public class User {
     private Long ID;
 
     @NotBlank(message = "Field 'name' must be filled")
-    @Size(max = 40)
     private String name;
 
     @NotBlank(message = "Field 'surname' must be filled")
-    @Size(max = 40)
     private String surname;
 
     @NotBlank(message = "Field 'username' must be filled")
-    @Size(max = 10)
     private String username;
 
     @NotBlank(message = "Field 'password' must be filled")
-    @Size(min = 5, max = 100)
+    @Column(length = 100)
     private String password;
 
     @Email(message = "This is not email, please enter correct data")
     @NotBlank(message = "Field 'email' must be filled")
-    @Size(max = 20)
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles_table",
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id"))

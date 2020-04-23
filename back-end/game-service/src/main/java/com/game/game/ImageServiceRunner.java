@@ -41,8 +41,6 @@ public class ImageServiceRunner implements CommandLineRunner {
 
     //  method which get all files from folder image in resources
     public void getAllImages() {
-
-        log.info("My theory works great");
         File[] files = null;
         try {
             files = ResourceUtils.getFile("classpath:images").listFiles();
@@ -78,22 +76,18 @@ public class ImageServiceRunner implements CommandLineRunner {
 
                 try {
                     content = Files.readAllBytes(path);
-                    log.info("content length : " + content.length);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
                 MultipartFile result = new MockMultipartFile(name, originalFileName, contentType, content);
-                log.info("MultipartFile : " + result);
 
                 tempSet.add(result);
             }
         }
 
-        if (!images.isEmpty()) {
-            log.info("Map : " + images);
+        if (!images.isEmpty())
             imageService.loadImageFromResource(images);
-        }
     }
 
     @Override

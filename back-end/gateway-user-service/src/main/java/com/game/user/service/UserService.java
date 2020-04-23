@@ -1,31 +1,45 @@
 package com.game.user.service;
 
 import com.game.user.DAO.CreateUser;
+import com.game.user.DAO.JwtResponse;
 import com.game.user.DAO.LoginUser;
 import com.game.user.model.ERoles;
 import com.game.user.model.Role;
 import com.game.user.model.User;
 import com.game.user.repository.RoleRepository;
 import com.game.user.repository.UserRepository;
+import com.game.user.security.JwtTokenService;
+import com.game.user.security.UserDetailsImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class UserService {
 
     @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private JwtTokenService jwtTokenService;
 
     //  get user by username
     public User getByUsername (String username) {
@@ -90,17 +104,26 @@ public class UserService {
         return  createdUser;
     }
 
-    //  login user
-    public String loginUser(LoginUser login) {
+    //  authentificate user
+    public JwtResponse loginUser(LoginUser loginUser) {
 
-        //  create Authentication using password and login
-        UsernamePasswordAuthenticationToken userToken =
-                new UsernamePasswordAuthenticationToken(login.getLogin(), login.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser.getLogin(), loginUser.getPassword());
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        String token = jwtTokenService.generateToken(authentication);
 
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> authorities = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
 
-
-
-        return "test";
+        return JwtResponse.builder()
+                .token(token)
+                .id(userDetails.getId())
+                .username(userDetails.getUsername())
+                .email(userDetails.getEmail())
+                .roles(authorities)
+                .build();
     }
 }

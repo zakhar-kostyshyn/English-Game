@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 @Getter
 @Setter
@@ -17,8 +16,5 @@ public class LoginUser {
 
     @NotBlank(message = "Field 'password' must be filled")
     private String password;
-
-    @NotBlank(message = "Field 'roles' must be filled")
-    private List<String> roles;
 
 }

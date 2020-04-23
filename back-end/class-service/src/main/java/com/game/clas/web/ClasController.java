@@ -83,7 +83,7 @@ public class ClasController {
     }
 
     //  connect Student to Class by code
-    @GetMapping("/class/connect")
+    @PostMapping("/class/connect")
     public ResponseEntity<?> getAllStudentByClass(@Valid @RequestBody ConnectStudent connectStudent) {
         log.info("run /class/connect/" + connectStudent);
         return ResponseEntity.ok(teacherService.connectStudentToClass(connectStudent));

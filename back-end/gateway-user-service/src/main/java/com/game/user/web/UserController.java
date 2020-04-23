@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 @RestController
 @Slf4j
+@CrossOrigin("*")
 @RequestMapping("/user")
 public class UserController {
 
@@ -32,7 +33,15 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(newUser));
     }
 
-    //  login user taken login and password
+    //  test
+    @GetMapping("/test")
+    public ResponseEntity<?> testUser() {
+        log.info("test");
+        return ResponseEntity.ok("TEST");
+    }
+
+
+    //  authentificate user
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody LoginUser login) {
         log.info("/user/create with posted " + login + " run");
