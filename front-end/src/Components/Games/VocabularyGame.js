@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Circle, Text, Rect, Image, Label, Group } from 'react-konva'
 import '../../style.css'
-import ScoreTimeVoice from '../Common/ScoreTimeVoice'
-import RecordTable from '../Common/RecordTable'
+import ScoreTimeVoice from '../Common/GameComponents/ScoreTimeVoice'
+import RecordTable from '../Common/GameComponents/RecordTable'
 
 
 class VocabularyGame extends Component {

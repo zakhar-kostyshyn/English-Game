@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Segment, Header, Container } from 'semantic-ui-react'
-import VocabularyGame from '../Games/VocabularyGame'
+import { Segment, Header } from 'semantic-ui-react'
 import StartGame from './StartGame'
 
 

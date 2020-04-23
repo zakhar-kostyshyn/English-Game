@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import GameViewInterface from '../Common/GameViewInterface'
+import GamePage from '../Common/GamePage/GamePage'
 
 class Time extends Component {
     render() {
         return (
             <div>
-               <GameViewInterface component='Time'/>
+               <GamePage component='Time'/>
             </div>
         )
     }

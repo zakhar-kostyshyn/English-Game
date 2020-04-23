@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import GameViewInterface from '../Common/GameViewInterface'
+import GamePage from '../Common/GamePage/GamePage'
 
 class Food extends Component {
     render() {
         return (
             <div>
-               <GameViewInterface component='Food'/>
+               <GamePage component='Food'/>
             </div>
         )
     }

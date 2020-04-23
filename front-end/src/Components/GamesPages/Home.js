@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import Games from '../Common/Games'
-
-import styled from 'styled-components'
-
-
+import Games from '../Common/StartPage/Games'
 
 class Home extends Component {
 

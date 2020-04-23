@@ -1,10 +1,12 @@
+
+// StartGame contain together all layers of game layer-3 often deffer
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Stage, Text, Rect, Layer, Label, Group } from 'react-konva'
-import ChooseTheme from './ChooseTheme'
-import VocabularyGame from '../Games/VocabularyGame'
-import { getTheme, getImage } from '../../Actions/ImageAction'
-import '../../style.css'
+import ChooseTheme from '../GameComponents/ChooseTheme'
+import VocabularyGame from '../../Games/VocabularyGame'
+import { getTheme, getImage } from '../../../Actions/ImageAction'
 
 class StartGame extends Component {
    

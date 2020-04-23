@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Circle, Text, Rect, Image, Label, Group } from 'react-konva'
+import { Text, Rect, Label, Group } from 'react-konva'
 
 
 class RecordTable extends Component {

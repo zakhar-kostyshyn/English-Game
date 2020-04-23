@@ -18,9 +18,9 @@ import Description from './Components/GamesPages/Description';
 import Numbers from './Components/GamesPages/Numbers';
 import Time from './Components/GamesPages/Time';
 import Spelling from './Components/GamesPages/Spelling';
-import Navbar from './Components/Common/Navbar';
-import Footer from './Components/Common/Footer';
-import SignIn from './Components/Common/SignIn'
+import Navbar from './Components/Common/Navigation/Navbar';
+import Footer from './Components/Common/Navigation/Footer';
+import SignIn from './Components/Common/Navigation/SignIn'
 
 const StyledContainer = styled(Container) `
 
