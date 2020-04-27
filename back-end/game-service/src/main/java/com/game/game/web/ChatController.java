@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @Slf4j
+@CrossOrigin("*")
 public class ChatController {
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ChatController.class);

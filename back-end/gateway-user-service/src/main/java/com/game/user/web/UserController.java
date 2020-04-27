@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -40,11 +41,17 @@ public class UserController {
         return ResponseEntity.ok("TEST");
     }
 
+    //  load user. Check token and if it valid get username and return data about user
+    @PostMapping("/load")
+    public ResponseEntity<?> loadUser (@Valid @RequestHeader("Authorization") String tokenHeader) {
+        log.info("/user/load with posted " + tokenHeader + " run");
+        return ResponseEntity.ok(userService.loadUser(tokenHeader));
+    }
 
     //  authentificate user
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody LoginUser login) {
-        log.info("/user/create with posted " + login + " run");
+        log.info("/user/login with posted " + login + " run");
         return ResponseEntity.ok(userService.loginUser(login));
     }
 }

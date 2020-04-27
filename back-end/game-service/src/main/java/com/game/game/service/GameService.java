@@ -25,7 +25,9 @@ public class GameService {
     public Set<Score> getGameScore(String name) {
 
         // TODO check if user with input game name exist
-        Set<Score> scores = gameRepository.findByName(name).get().getScore();
+        Set<Score> scores = gameRepository.findByName(name)
+                .orElseThrow(() -> new RuntimeException("table " + name + " is not exist"))
+                .getScore();
 
         log.info("all Score : " + scores + " in Game : " + name);
 

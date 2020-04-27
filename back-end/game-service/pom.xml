@@ -32,7 +32,6 @@
             <version>2.2.2.RELEASE</version>
         </dependency>
 
-
         <!--start_1-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

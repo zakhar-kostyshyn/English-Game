@@ -14,6 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @Slf4j
+@CrossOrigin("*")
 public class ClasController {
 
     @Autowired
