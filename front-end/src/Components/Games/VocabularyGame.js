@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Circle, Text, Rect, Image, Label, Group } from 'react-konva'
 import '../../style.css'
 import ScoreTimeVoice from '../Common/GameComponents/ScoreTimeVoice'
-import RecordTable from '../Common/GameComponents/RecordTable'
-
 
 class VocabularyGame extends Component {
 
@@ -24,8 +22,10 @@ class VocabularyGame extends Component {
         pause: 0,
         say: "Hello",
         pause: false,
+        currentScore: 0,
 
         round: 0
+        
 
     }
 
@@ -45,14 +45,27 @@ class VocabularyGame extends Component {
             pause: 0,
             say: "Hello",
             pause: false,
-            round: 0
+            round: 0,
+            score: 0
         })
     }
 
-    //  change layer in StartGame Component
+    //  change layer in StartGame to show start
     onBack = () => {
         this.reset()
         this.props.changeLayer('layer-1')
+    }
+
+    //  change layer in StartGame to show table and set score to state in StartGame
+    changeLayerOnTable = () => {
+
+        // reset state
+        this.reset()
+
+        this.props.setFinalScore(this.state.currentScore)
+
+        //  show table layer
+        this.props.changeLayer('layer-4')
     }
 
     endGame = () => {
@@ -158,6 +171,13 @@ class VocabularyGame extends Component {
 
     }
 
+    //  function which update score. Calls in ScoreTimeComponent when score update
+    updateScore = score => {
+        this.setState({
+            currentScore: score
+        })
+    }
+
     componentDidMount() {
 
         //  create gradient because we can't do this in Konva props
@@ -184,147 +204,143 @@ class VocabularyGame extends Component {
         }
     }
 
+    //  sorry
     populateWithRandomImage = () => {
 
         //  when we end round 5 we will go to the score table
-        if (this.state.round == 6) {
+        if (this.state.round == 1) {
+            this.changeLayerOnTable()         
+        } else {
+                //  increment round of game every time 
+                this.setState({
+                    round: ++this.state.round
+                })
 
-            // TODO catch end of the game and all inforamation
-            // reset state
-            this.reset()
 
-            //  stop 
-            return
-        } else 
-            //  increment round of game every time 
+            let firstLine = []
+            let secondLine = []
+
+            //  return well formated for display name of image
+            const formatName = name => {
+
+                //  cut of after .
+                name = name.replace('.png', '')
+
+                //  make first letter to upper
+                name = name[0].toUpperCase() + name.slice(1);
+
+                return name
+            }
+
+            //  in purpose to shuffle text circles
+            //  array which will represent suffle indexs
+            let suffleArray = []
+
+            //  update state.shuffle at start 
             this.setState({
-                round: ++this.state.round
-            })
+                shuffle: [{
+                    index: 0,
+                    canUse: true
+                },{
+                    index: 1,
+                    canUse: true
+                },{
+                    index: 2,
+                    canUse: true
+                }]
 
-
-        let firstLine = []
-        let secondLine = []
-
-        //  return well formated for display name of image
-        const formatName = name => {
-
-            //  cut of after .
-            name = name.replace('.png', '')
-
-            //  make first letter to upper
-            name = name[0].toUpperCase() + name.slice(1);
-
-            return name
-        }
-
-        //  in purpose to shuffle text circles
-        //  array which will represent suffle indexs
-        let suffleArray = []
-
-        //  update state.shuffle at start 
-        this.setState({
-            shuffle: [{
-                index: 0,
-                canUse: true
-            },{
-                index: 1,
-                canUse: true
-            },{
-                index: 2,
-                canUse: true
-            }]
-
-        }, () => {
-
-            suffleArray = this.state.shuffle
-
-            //  this code work
-            for (let i = 0; i < 3; i++) 
-                while (true) {
-
-                    let random = Math.round(Math.random() * 2) 
-
-                    let noSuchRandom = true
-
-                    //  check if it is object with such index and canUse = false
-                    for (let i = 0; i < 3; i++) 
-                        if (suffleArray[i].index == random && suffleArray[i].canUse == false)
-                            noSuchRandom = false
-                    
-                    if (!noSuchRandom) continue
-
-                    //  find obj which never used
-                    for (let i = 0; i < 3; i++)
-                        if (suffleArray[i].canUse) {
-                            suffleArray[i].canUse = false
-                            suffleArray[i].index = random
-                            noSuchRandom = false
-                            break
-                        }
-
-                    if (!noSuchRandom) break
-
-                }
-
-            //  save randomise in state
-            this.setState({
-                shuffle: suffleArray
             }, () => {
 
-                //  when we saved shuffle we can use it
-                const state = this.state
+                suffleArray = this.state.shuffle
 
-                for (let i = 0; i < 3; i++) {
+                //  this code work
+                for (let i = 0; i < 3; i++) 
+                    while (true) {
 
-                    let randomIndex = Math.round(Math.random() * state.allImages.length)
+                        let random = Math.round(Math.random() * 2) 
 
-                    //  check if name by this random index exist    also error can cause here
-                    if (firstLine.length > 0)
-                        if (firstLine.find(image => image.name == formatName(state.allImages[randomIndex].name)) != undefined) {
-                            i--
-                            continue
-                    }                   
-                    //  error can cause here because image don't load
-                    const img = new window.Image()
-                    img.src = `data:image/png;base64,${state.allImages[randomIndex].image}` 
-                    
-                    firstLine.push  ({
-                        //  counting x for every circle depends on index
-                        x: 250 + 190 * i,
-                        y: 150,
-                        width: 160,
-                        height: 160,
-                        index: i,
-                        image: img,
-                        name: formatName(state.allImages[randomIndex].name),
-                        visibility: true
-                    })
+                        let noSuchRandom = true
 
-                    secondLine.push({
-                        //  shuffle before set x
-                        x: 250 + 190 * state.shuffle[i].index,
-                        y: 330,
-                        width: 160,
-                        height: 160,
-                        index: state.shuffle[i].index,
-                        image: img,
-                        name: formatName(state.allImages[randomIndex].name),
-                        visibility: true
-                    })
-                }
+                        //  check if it is object with such index and canUse = false
+                        for (let i = 0; i < 3; i++) 
+                            if (suffleArray[i].index == random && suffleArray[i].canUse == false)
+                                noSuchRandom = false
+                        
+                        if (!noSuchRandom) continue
 
+                        //  find obj which never used
+                        for (let i = 0; i < 3; i++)
+                            if (suffleArray[i].canUse) {
+                                suffleArray[i].canUse = false
+                                suffleArray[i].index = random
+                                noSuchRandom = false
+                                break
+                            }
+
+                        if (!noSuchRandom) break
+
+                    }
+
+                //  save randomise in state
                 this.setState({
-                    firstLineImages: firstLine,
-                    secondLineImages: secondLine,
-                    //  i think it's not the best variant TODO remake
-                    allImages: this.state.allImages
-                        .filter(image => formatName(image.name) != firstLine[0].name)
-                        .filter(image => formatName(image.name) != firstLine[1].name)
-                        .filter(image => formatName(image.name) != firstLine[2].name)
-                })            
+                    shuffle: suffleArray
+                }, () => {
 
+                    //  when we saved shuffle we can use it
+                    const state = this.state
+
+                    for (let i = 0; i < 3; i++) {
+
+                        let randomIndex = Math.round(Math.random() * state.allImages.length)
+
+                        //  check if name by this random index exist    also error can cause here
+                        if (firstLine.length > 0)
+                            if (firstLine.find(image => image.name == formatName(state.allImages[randomIndex].name)) != undefined) {
+                                i--
+                                continue
+                        }                   
+                        //  error can cause here because image don't load
+                        const img = new window.Image()
+                        img.src = `data:image/png;base64,${state.allImages[randomIndex].image}` 
+                        
+                        firstLine.push  ({
+                            //  counting x for every circle depends on index
+                            x: 250 + 190 * i,
+                            y: 150,
+                            width: 160,
+                            height: 160,
+                            index: i,
+                            image: img,
+                            name: formatName(state.allImages[randomIndex].name),
+                            visibility: true
+                        })
+
+                        secondLine.push({
+                            //  shuffle before set x
+                            x: 250 + 190 * state.shuffle[i].index,
+                            y: 330,
+                            width: 160,
+                            height: 160,
+                            index: state.shuffle[i].index,
+                            image: img,
+                            name: formatName(state.allImages[randomIndex].name),
+                            visibility: true
+                        })
+                    }
+
+                    this.setState({
+                        firstLineImages: firstLine,
+                        secondLineImages: secondLine,
+                        //  i think it's not the best variant TODO remake
+                        allImages: this.state.allImages
+                            .filter(image => formatName(image.name) != firstLine[0].name)
+                            .filter(image => formatName(image.name) != firstLine[1].name)
+                            .filter(image => formatName(image.name) != firstLine[2].name)
+                    })            
+
+                })
             })
-        })
+        }       //  here end else (sorry for this)
     }
 
     render() {
@@ -433,6 +449,7 @@ class VocabularyGame extends Component {
                         error={this.state.error} 
                         say={this.state.say}
                         pause={this.state.pause}
+                        updateScore={this.updateScore}
                     />
                         
 
@@ -519,12 +536,7 @@ class VocabularyGame extends Component {
                         </Label>
                     ))}
 
-
-
-                    {/* show  table with score if ther is 6 round */}
-                    {this.state.round == 6 ? <RecordTable/> : null}
-
-
+                    
                 </Label>
             )
         } else {

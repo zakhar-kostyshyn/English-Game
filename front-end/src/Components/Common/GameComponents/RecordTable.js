@@ -26,6 +26,8 @@ class RecordTable extends Component {
 
     render() {
 
+        console.log(this.state.props)
+
          //  stage data for canvas
          const stage = {
             width: 900,
@@ -42,27 +44,37 @@ class RecordTable extends Component {
                     shadowBlur={10}/>
 
                  {/* creating article */}
-                <Label x={stage.width / 2} y={100} >
+                <Label 
+                    x={stage.width / 2} 
+                    y={70}>
+
                     <Rect
-                        width={500}
-                        height={150}
-                        offsetX={250}
-                        offsetY={75}
+                        width={300}
+                        height={100}         
+                        offsetX={150}
+                        offsetY={50}
                         fill='white'
                         stroke='black'
                         strokeWidth={10}
-                        cornerRadius={50}/>
+                        cornerRadius={50}
+                    />
                     <Text
-                        width={500}
-                        height={150}
+                        width={300}
+                        height={100}
+                        offsetX={150}
+                        offsetY={50}
                         align='center'
                         verticalAlign='middle'
-                        text='Select Theme'
-                        fontSize={60}   
+                        text='Table'
+                        fontSize={30}   
                         fontFamily='Berkshire Swash'
                         fill='black'
-                        stroke='grey'/>
+                    />
                 </Label>                   
+            
+                {/* creating table  */}
+
+
             </Group>
         )
     } 

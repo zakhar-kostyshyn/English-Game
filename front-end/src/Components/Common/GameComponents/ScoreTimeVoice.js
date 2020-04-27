@@ -73,8 +73,8 @@ class ScoreTimeVoice extends Component {
 
     countingScore = () => Math.trunc(1000 + this.state.markIndex * 100 - this.state.time * 10)
         
-    //  back to layer-1
-    componentWillUnmount(){
+    //  back to layer-1 
+    componentWillUnmount() {
         this.setState({
             score: 0,
             scoreArray: [],
@@ -87,7 +87,11 @@ class ScoreTimeVoice extends Component {
         })
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
+
+        //  recreate array score to show right colum
+        if (prevState.score != this.state.score)  
+           this.props.updateScore(this.state.score)
 
         //  catch if player make right choose
         if (prevProps.update < this.props.update) {
@@ -104,22 +108,17 @@ class ScoreTimeVoice extends Component {
                 utterance.voice = this.state.voice
                 speechSynthesis.speak(utterance)
             })
-            //  recreate array score to show right colum
-            this.createScoreArray()
+
+            // change score in vocabulary game
+            this.props.updateScore(this.state.score)
         }
 
         //  catch if player make wrong choose
         if (prevProps.error < this.props.error) {
 
             this.setState({
-                score: this.state.score - 100,
-                markIndex: --this.state.markIndex,
-                // say: this.props.say
-            }, () => {
-                //  catch name to say           (say wrong even if player didn't do error, because palyer didn't put on right place)
-                // let utterance = new SpeechSynthesisUtterance('wrong');
-                // utterance.voice = this.state.voice
-                // speechSynthesis.speak(utterance)
+                // score: this.state.score  don't change
+                markIndex: --this.state.markIndex
             })
 
             this.createScoreArray()

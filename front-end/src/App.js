@@ -30,17 +30,25 @@ const StyledContainer = styled(Container) `
 
 `
 
-export default class App extends React.Component {
+class App extends React.Component {
 
   state = {
-    show: false
+    show: false,
+    showRegistrate: false
   } 
 
   //  callback to open dimmer
   showDimmer = () => this.setState({ show: true }) 
 
   //  callback to close dimmer
-  closeDimmer = () => this.setState({ show: false })
+  closeDimmer = () => this.setState({ show: false, showRegistrate: false })
+
+  //  make change to show registrate component or signIn Segment
+  onRegistrate = () => {
+    this.setState({
+        showRegistrate: this.setState.showRegistrate ? false : true
+    })
+  }
 
   render() {
     return (
@@ -67,14 +75,16 @@ export default class App extends React.Component {
                 active={this.state.show} 
                 onClickOutside={this.closeDimmer}>
                 <StyledContainer>
-                    <SignIn/>
+                    <SignIn closeDimmer={this.closeDimmer} showRegistrate={this.state.showRegistrate} onRegistrate={this.onRegistrate}/>
                 </StyledContainer>
             </Dimmer.Inner>
           </Dimmer.Dimmable>
         </Router>
       </Provider>
-    );
+    )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'))
+
+export default App

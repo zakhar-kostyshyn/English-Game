@@ -1,12 +1,13 @@
 
 // StartGame contain together all layers of game layer-3 often deffer
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Stage, Text, Rect, Layer, Label, Group } from 'react-konva'
 import ChooseTheme from '../GameComponents/ChooseTheme'
 import VocabularyGame from '../../Games/VocabularyGame'
 import { getTheme, getImage } from '../../../Actions/ImageAction'
+import { allScoreFromGameWithName } from '../../../Actions/TableAction'
+import RecordTable from '../GameComponents/RecordTable'
 
 class StartGame extends Component {
    
@@ -19,7 +20,9 @@ class StartGame extends Component {
         theme: "",
 
         //  canvas layers
-        layers: ['layer-3', 'layer-2', 'layer-1']
+        layers: ['layer-4', 'layer-3', 'layer-2', 'layer-1'],
+
+        playerScore: 0
     }
 
     componentDidMount() {
@@ -38,6 +41,12 @@ class StartGame extends Component {
         })
     }
 
+    //  set player score from game Component
+    setFinalScore = score => {
+        this.setState({
+            playerScore: score
+        })
+    }
 
     //  change array of layers, remove input layer and insert in the end of array
     //  to display on canvas
@@ -56,7 +65,7 @@ class StartGame extends Component {
 
     //  set theme from RectHiglight component and this func set 
     //  into props of ChooseTheme and then into RectHiglight, baddd.
-    //  but I don't wanna use redux here
+    //  but I don't know how to use redux with Konva canvas 
 
     //  after getting theme calls action ImageAction and 
     //  set into reducer state all images from theme
@@ -75,7 +84,7 @@ class StartGame extends Component {
     }
     
 
-    //  invoke when we click on start button
+    //  invoke when we click on start button and change layer-1 on layer-2
     onStart = () => this.changeLayer('layer-2')
     
     //  say which main game component shood load in layer with name layer-3
@@ -84,7 +93,11 @@ class StartGame extends Component {
             case 'Vocabulary':
                 return (
                     //  give all images for component which represent layer-3
-                    <VocabularyGame images={this.props.images} changeLayer={this.changeLayer}/>
+                    <VocabularyGame 
+                        images={this.props.images} 
+                        changeLayer={this.changeLayer}
+                        setFinalScore={this.setFinalScore}
+                        />
                 )
             //  TODO more cases for each game
             default:
@@ -179,6 +192,13 @@ class StartGame extends Component {
                     <Group>
                         {this.componentShow()}
                     </Group>
+                )
+            case 'layer-4':
+                //  take all score from game
+                this.props.allScoreFromGameWithName(this.props.component)
+                return (
+                    //  show table set to the props name of game
+                    <RecordTable component={this.props.component} playerScore={this.state.playerScore}/>
                 )    
             default:
                 return('no layer');
@@ -188,11 +208,11 @@ class StartGame extends Component {
     render() {         
         return (
             <Stage width={900} height={550}>
-                {this.state.layers.map(layer => ( 
-                    <Layer key={layer}>
-                        {this.layersShow(layer)}
-                    </Layer>
-                ))}
+                    {this.state.layers.map(layer => ( 
+                        <Layer key={layer}>
+                            {this.layersShow(layer)}
+                        </Layer>
+                    ))}
             </Stage>
         )
     }
@@ -202,4 +222,4 @@ const mapStateToProps = state => ({
     images: state.ImageReducer.images
 })
 
-export default connect(mapStateToProps, { getTheme })(StartGame)
+export default connect(mapStateToProps, { getTheme, allScoreFromGameWithName })(StartGame)
