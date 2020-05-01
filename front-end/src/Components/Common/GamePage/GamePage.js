@@ -9,7 +9,7 @@ const StyledParagraph = styled.p `
 
 `
 
-class GameViewInterface extends Component {
+class GamePage extends Component {
     render() {
         return (
             <div>
@@ -64,4 +64,4 @@ class GameViewInterface extends Component {
     }
 }
 
-export default connect(null)(GameViewInterface)
+export default connect(null)(GamePage)

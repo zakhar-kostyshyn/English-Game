@@ -20,7 +20,9 @@ const initialState = {
 export default function(state = initialState, action) {
     switch(action.type) {
         case LOAD_SUCCESS:
+            console.log('LOAD_SUCCESS')
         case LOGIN_SUCCESS:
+            console.log('LOGIN_SUCCESS')
             localStorage.setItem("token", action.payload.token)
             return {
                 ...state,
@@ -35,6 +37,7 @@ export default function(state = initialState, action) {
                 ...state
             }
         case CREATE_USER_SUCCESS:
+            console.log("CREATE_USER_SUCCESS");
             return {
                 ...state,
                 isUserCreate: true,
@@ -46,6 +49,7 @@ export default function(state = initialState, action) {
             }
         case LOGOUT:
             localStorage.removeItem("token")
+            console.log("LOGOUT");
             return {
                 ...state,
                 username: null,

@@ -50,6 +50,7 @@ class RectHiglight extends Component {
                     fill={this.state.rectColor}
                     stroke='black'
                     strokeWidth={5}
+                    cornerRadius={20}
                     duration={this.state.duration}
                     shadowOffsetX={this.state.rectShadowX}
                     shadowOffsetY={this.state.rectShadowY}
@@ -59,11 +60,13 @@ class RectHiglight extends Component {
                     onMouseOut={this.onMouseOut}
                     onMouseOver={this.onMouseOver}/> 
                 <Text
-                    width={75}
-                    height={25}
-                    offsetX={36}
-                    offsetY={13}
-                    fontSize={20}   
+                    width={100}
+                    height={100}
+                    offsetX={50}
+                    offsetY={50}
+                    fontSize={20} 
+                    align='center'
+                    verticalAlign='middle'  
                     fontFamily='Berkshire Swash'
                     fill='black'
                     onClick={this.onClickLabel}

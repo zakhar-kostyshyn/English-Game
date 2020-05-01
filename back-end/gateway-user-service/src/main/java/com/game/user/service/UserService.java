@@ -169,6 +169,8 @@ public class UserService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
+
+
         return JwtResponse.builder()
                 .token(token)
                 .id(userDetails.getId())

@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { Text, Rect, Label, Group } from 'react-konva'
+import Backgroud from './Backgroud';
 
 
 class RecordTable extends Component {
-
-    state = {
-        gradient: null
-    }
 
     componentDidMount() {
 
@@ -26,55 +23,36 @@ class RecordTable extends Component {
 
     render() {
 
-        console.log(this.state.props)
+        console.log(this.props)
 
          //  stage data for canvas
          const stage = {
-            width: 900,
-            height: 550
+            width: 1000,
+            height: 650
         }
 
         return(
             <Group>
-                {/* gradien */}
-                <Rect   
-                    width={stage.width}
-                    height={stage.height}
-                    fill={this.state.gradient}
-                    shadowBlur={10}/>
-
-                 {/* creating article */}
-                <Label 
-                    x={stage.width / 2} 
-                    y={70}>
-
-                    <Rect
-                        width={300}
-                        height={100}         
-                        offsetX={150}
-                        offsetY={50}
+                <Backgroud/>
+                <Label
+                    x={stage.width / 2}
+                    y={stage.height / 2}>
+                    <Rect 
+                        width={200}
+                        height={200}
                         fill='white'
                         stroke='black'
                         strokeWidth={10}
-                        cornerRadius={50}
                     />
                     <Text
-                        width={300}
-                        height={100}
-                        offsetX={150}
-                        offsetY={50}
-                        align='center'
-                        verticalAlign='middle'
-                        text='Table'
-                        fontSize={30}   
-                        fontFamily='Berkshire Swash'
-                        fill='black'
+                       width={200}
+                       height={200} 
+                       align='center'
+                       verticalAlign='middle'
+                       fontSize={30}
+                       text='HERE SHOULD BE TABLE'
                     />
-                </Label>                   
-            
-                {/* creating table  */}
-
-
+                </Label>
             </Group>
         )
     } 
