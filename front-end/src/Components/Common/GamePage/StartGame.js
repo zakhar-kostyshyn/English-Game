@@ -6,7 +6,7 @@ import { Stage, Text, Rect, Layer, Label, Group } from 'react-konva'
 import ChooseTheme from '../GameComponents/ChooseTheme'
 import { getTheme, getImage } from '../../../Actions/ImageAction'
 import { allScoreFromGameWithName } from '../../../Actions/TableAction'
-import RecordTable from '../GameComponents/RecordTable'
+import Result from '../GameComponents/Result'
 import VocabularyGame from '../../Games/VocabularyGame/VocabularyGame'
 import SpellingGame from '../../Games/SpellingGame/SpellingGame'
 import StartLayer from '../GameComponents/StartLayer'
@@ -33,17 +33,11 @@ class StartGame extends Component {
 ////////////////////////////////////
 
 
-    //  give func for games Components and save ends score into state
-    scoreReturn = score => {
+    //  save date and score from game 
+    gamePlayerDataAndScoreReturn = (data, score) => {
         this.setState({
+            playerData: data,
             playerScore: score
-        })
-    }
-
-    //  save date from game 
-    gamePlayerDataReturn = data => {
-        this.setState({
-            playerData: data
         })
     }
 
@@ -64,8 +58,6 @@ class StartGame extends Component {
     //  after all action set array to state
     changeLayer = layerName => {
         
-        console.log("change layer on " + layerName)
-
         const arrayOfLayers = this.state.layers
         const indexOfLayer = arrayOfLayers.indexOf(layerName)
         arrayOfLayers.splice(indexOfLayer, 1)
@@ -105,9 +97,8 @@ class StartGame extends Component {
                     //  give all images for component which represent layer-3
                     <VocabularyGame 
                         currentLayer={this.state.layers}
-                        scoreReturn={this.scoreReturn}
                         allImages={this.props.images}
-                        gamePlayerDataReturn={this.gamePlayerDataReturn}
+                        gamePlayerDataAndScoreReturn={this.gamePlayerDataAndScoreReturn}
                         changeLayerReturn={this.changeLayer}
                         task={this.state.task}
                         taskReturn={this.taskReturn}
@@ -119,7 +110,7 @@ class StartGame extends Component {
                         currentLayer={this.state.layers}
                         scoreReturn={this.scoreReturn}
                         allImages={this.props.images}
-                        gamePlayerDataReturn={this.gamePlayerDataReturn}
+                        gamePlayerDataAndScoreReturn={this.gamePlayerDataAndScoreReturn}
                         changeLayerReturn={this.changeLayer}
                         task={this.state.task}
                         taskReturn={this.taskReturn}
@@ -155,7 +146,7 @@ class StartGame extends Component {
             case 'layer-4':
                 return (
                     //  show table set to the props name of game
-                    <RecordTable data={this.state.data} score={this.state.score}/>
+                    <Result data={this.state.playerData} score={this.state.playerScore}/>
                 )    
             default:
                 return('no layer');

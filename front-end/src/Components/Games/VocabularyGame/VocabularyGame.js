@@ -17,7 +17,7 @@ class VocabularyGame extends Component {
 
     state = {
 
-        maxRound: 5,
+        maxRound: 4,
 
         stage: {
             width: 1000,
@@ -32,7 +32,7 @@ class VocabularyGame extends Component {
         streak: 0,
         score: 0,
         time: 0,
-        round: 0,
+        round: 1,
         right: 0,
         error: 0,
 
@@ -60,8 +60,9 @@ class VocabularyGame extends Component {
         }
 
         if (this.state.secondLineImages.length > 0)
-            if (!this.state.secondLineImages[0].visible && !this.state.secondLineImages[1].visible && !this.state.secondLineImages[2].visible)                
+            if (!this.state.secondLineImages[0].visible && !this.state.secondLineImages[1].visible && !this.state.secondLineImages[2].visible)
                 this.microTaskComplited()
+            
     }
 
     componentWillUnmount() {
@@ -108,7 +109,7 @@ class VocabularyGame extends Component {
                             name: treeRandomImages[0].name.substring(0, treeRandomImages[0].name.length - 4),
                         }],
         
-                        secondLineImages: [..._.shuffle(this.state.secondLineImages), {
+                        secondLineImages: [...this.state.secondLineImages, {
                             visible: true,
                             image: firstImage,
                             name: treeRandomImages[0].name.substring(0, treeRandomImages[0].name.length - 4),
@@ -126,7 +127,7 @@ class VocabularyGame extends Component {
                             name: treeRandomImages[1].name.substring(0, treeRandomImages[1].name.length - 4),
                         }],
         
-                        secondLineImages: [..._.shuffle(this.state.secondLineImages), {
+                        secondLineImages: [...this.state.secondLineImages, {
                             visible: true,
                             image: secondImage,
                             name: treeRandomImages[1].name.substring(0, treeRandomImages[1].name.length - 4),
@@ -145,12 +146,12 @@ class VocabularyGame extends Component {
                             image: thirdImage,
                             name: treeRandomImages[2].name.substring(0, treeRandomImages[2].name.length - 4),
                         }],
-        
-                        secondLineImages: [..._.shuffle(this.state.secondLineImages), {
+                        //  shuffle second line
+                        secondLineImages: _.shuffle([...this.state.secondLineImages, {
                             visible: true,
                             image: thirdImage,
                             name: treeRandomImages[2].name.substring(0, treeRandomImages[2].name.length - 4),
-                        }],
+                        }]),
         
                         allImages: this.state.allImages.filter(image => image.id != treeRandomImages[0].id)
         
@@ -203,7 +204,7 @@ class VocabularyGame extends Component {
         this.setState({
             score: this.state.time < 10 ? this.state.score + 200 + streak : this.state.score + 100 + streak,
             right: ++this.state.right,
-            streak: ++this.state.streak,
+            streak: this.state.streak == 6 ? this.state.streak : ++this.state.streak,
             name: null,
             firstLineImages: this.state.firstLineImages.map(img => img.name == name ? {
                 image: img.image,
@@ -223,19 +224,35 @@ class VocabularyGame extends Component {
         //  stop timer
         clearInterval(this.state.tick)
 
+        //  next 3 lines create array of names 
+        let words = []
+        for (let i = 0; i < 3; i++)
+            words.push(this.state.firstLineImages[i].name)
 
         //  check the end of rounds 
-        if (this.state.round == this.state.maxRound) 
-            this.endGame();
+        if (this.state.round + 1 == this.state.maxRound) 
+            this.setState({
+                statePlayerData: [...this.state.statePlayerData, {
+                    round: this.state.round,
+                    word: words,
+                    error: this.state.error,
+                    right: this.state.right,
+                    time: this.state.time,
+                    mark: this.state.error > this.state.right ? 'Bad' : this.state.error != 0 ? 'Good' : "Well Done"
+                }],
+            }, () => {
+                this.endGame()
+            })
         else 
             this.setState({
-                //  save data about microtask to represent in the end of game and then safe to user stats
+
                 statePlayerData: [...this.state.statePlayerData, {
-                    word: this.state.firstLineImages,
-                    errors: this.state.error,
+                    round: this.state.round,
+                    word: words,
+                    error: this.state.error,
+                    right: this.state.right,
                     time: this.state.time,
-                    streak: this.state.streak,
-                    score: this.state.score
+                    mark: this.state.error > this.state.right ? 'Bad' : this.state.error != 0 ? 'Good' : "Well Done"
                 }],
 
                 score: this.state.score + 300,
@@ -243,7 +260,6 @@ class VocabularyGame extends Component {
                 //  increase count of rounds
                 round: ++this.state.round,
                 isTimeStop: true,
-                streak: ++this.state.streak,
 
                 time: 0,
                 firstLineImages: [],
@@ -259,11 +275,9 @@ class VocabularyGame extends Component {
         //  stop timer
         clearInterval(this.state.tick)
 
-        //  return DATA about game to top Component StartGame
-        this.props.gamePlayerDataReturn(this.state.statePlayerData)
+        //  return DATA and SCORE about game to top Component StartGame
+        this.props.gamePlayerDataAndScoreReturn(this.state.statePlayerData, this.state.score)
 
-        //  return SCORE about game to top Component StartGame
-        this.props.scoreReturn(this.state.score)
 
         //  state to default
         this.toDefaultState()
@@ -280,15 +294,12 @@ class VocabularyGame extends Component {
             allImages: [],
 
             streak: 0,
-            score: 0,
             time: 0,
-            round: 0,
+            round: 1,
             right: 0,
             error: 0,
 
-            isTimeStop: false,       
-
-            statePlayerData: []
+            isTimeStop: false
         })
     }
 

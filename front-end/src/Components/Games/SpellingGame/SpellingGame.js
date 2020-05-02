@@ -16,7 +16,7 @@ class SpellingGame extends Component {
 
     state = {
 
-        maxRound: 5,
+        maxRound: 4,
 
         stage: {
             width: 1000,
@@ -33,7 +33,7 @@ class SpellingGame extends Component {
         streak: 0,
         score: 0,
         time: 0,
-        round: 0,
+        round: 1,
         right: 0,
         error: 0,
 
@@ -130,15 +130,12 @@ class SpellingGame extends Component {
             successLetterIndex: 0,
 
             streak: 0,
-            score: 0,
             time: 0,
-            round: 0,
+            round: 1,
             right: 0,
             error: 0,
 
-            isTimeStop: false,       
-
-            statePlayerData: []
+            isTimeStop: false
         })
     }
 
@@ -153,7 +150,8 @@ class SpellingGame extends Component {
         this.setState({
             successLetterIndex: ++this.state.successLetterIndex,
             score: this.state.time < 10 ? this.state.score + 200 + streak : this.state.score + 100 + streak,
-            right: ++this.state.right
+            right: ++this.state.right,
+            streak: this.state.streak == 6 ? this.state.streak : ++this.state.streak,
         })
     }
 
@@ -172,22 +170,40 @@ class SpellingGame extends Component {
 
     microTaskComplited = () => {
 
+        //  say complite word
+        speechSynthesis.speak(new SpeechSynthesisUtterance(this.state.rightWord))
+
         //  stop timer
         clearInterval(this.state.tick)
 
+        //  make word to array for normal represent with vocabulary 3 words in result
+        let words = []
+        words.push(this.state.rightWord)
 
         //  check the end of rounds 
-        if (this.state.round == this.state.maxRound) 
-            this.endGame();
+        if (this.state.round + 1 == this.state.maxRound) 
+            this.setState({
+                statePlayerData: [...this.state.statePlayerData, {
+                    round: this.state.round,
+                    word: words,
+                    error: this.state.error,
+                    right: this.state.right,
+                    time: this.state.time,
+                    mark: this.state.error > this.state.right ? 'Bad' : this.state.error != 0 ? 'Good' : "Well Done"
+                }],
+            }, () => {
+                this.endGame()
+            })
         else 
             this.setState({
-                //  save data about microtask to represent in the end of game and then safe to user stats
+
                 statePlayerData: [...this.state.statePlayerData, {
-                    word: this.state.rightWord,
-                    errors: this.state.error,
+                    round: this.state.round,
+                    word: words,
+                    error: this.state.error,
+                    right: this.state.right,
                     time: this.state.time,
-                    streak: this.state.streak,
-                    score: this.state.score
+                    mark: this.state.error > this.state.right ? 'Bad' : this.state.error != 0 ? 'Good' : "Well Done"
                 }],
 
                 successLetterIndex: 0,
@@ -196,7 +212,6 @@ class SpellingGame extends Component {
                 //  increase count of rounds
                 round: ++this.state.round,
                 isTimeStop: true,
-                streak: ++this.state.streak,
 
                 time: 0,
                 image: null,
@@ -213,11 +228,8 @@ class SpellingGame extends Component {
         //  stop timer
         clearInterval(this.state.tick)
 
-        //  return DATA about game to top Component StartGame
-        this.props.gamePlayerDataReturn(this.state.statePlayerData)
-
-        //  return SCORE about game to top Component StartGame
-        this.props.scoreReturn(this.state.score)
+        //  return DATA and SCORE about game to top Component StartGame
+        this.props.gamePlayerDataAndScoreReturn(this.state.statePlayerData, this.state.score)
 
         //  state to default
         this.toDefaultState()
