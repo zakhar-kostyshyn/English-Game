@@ -27,4 +27,8 @@ public class Score {
     @NotBlank(message = "Field 'score' must be filled")
     @Size(max = 40)
     private String score;
+
+    @NotBlank(message = "Field 'scoreTime' must be filled")
+    @Size(max = 100)
+    private String scoreTime;
 }

@@ -9,7 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static java.lang.Integer.decode;
 
 @Service
 @Slf4j
@@ -25,7 +30,7 @@ public class GameService {
     public Set<Score> getGameScore(String name) {
 
         // TODO check if user with input game name exist
-        Set<Score> scores = gameRepository.findByName(name)
+        Set<Score> scores = gameRepository.findByName(name.toLowerCase())
                 .orElseThrow(() -> new RuntimeException("table " + name + " is not exist"))
                 .getScore();
 
@@ -35,17 +40,18 @@ public class GameService {
     }
 
     //  add new user's score to score set
-    public Set<Score> createScore(CreateNewUserScore createNewUserScore) {
+    public Integer createScore(CreateNewUserScore createNewUserScore) {
 
         Score newScore = Score.builder()
                 .score(createNewUserScore.getScore())
                 .username(createNewUserScore.getUsername())
+                .scoreTime(createNewUserScore.getScoreTime())
                 .build();
 
         scoreRepository.save(newScore);
 
         // TODO chek if game with input name  exist
-        Game existedGame = gameRepository.findByName(createNewUserScore.getGame()).get();
+        Game existedGame = gameRepository.findByName(createNewUserScore.getGame()).orElseThrow();
 
         Set<Score> addedSet = existedGame.getScore();
         addedSet.add(newScore);
@@ -55,7 +61,15 @@ public class GameService {
         log.info("new Score : " + newScore + " in Game : " + existedGame);
         log.info("all Score : " + addedSet + " in Game : " + createNewUserScore.getGame());
 
-        return addedSet;
+        //  get index of our new score by score number
+        Integer index = new ArrayList<Score>(addedSet).stream()
+                .sorted((s1, s2) -> Integer.decode(s2.getScore()).compareTo(Integer.decode(s1.getScore())))
+                .collect(Collectors.toList())
+                .indexOf(newScore);
+
+        log.info("index of created score is : " + index);
+
+        return index;
     }
 
 }

@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import ImageReducer from './ImageReducer'
 import UserReducer from './UserReducer'
-import TableReducer from './TableReducer'
+import ChatReducer from './ChatReducer'
+import ScoreReducer from './ScoreReducer'
 
 export default combineReducers({
    ImageReducer,
    UserReducer,
-   TableReducer
+   ChatReducer,
+   ScoreReducer
 });

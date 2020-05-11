@@ -29,11 +29,9 @@ public class ChatService {
     private MessageRepository messageRepository;
 
     //  get all message from game's chat
-    public List<Message> getAllMessage(String name) {
+    public List<Message> getAllMessage(String gameName) {
 
-        // TODO check if user with input game name exist
-
-        Chat existChat = gameRepository.findByName(name).get().getChat();
+        Chat existChat = gameRepository.findByName(gameName.toLowerCase()).orElseThrow().getChat();
         List<Message> messageList = existChat.getData();
 
         log.info("all Message : " + messageList + " in Chat : " + existChat.getGame());
@@ -54,7 +52,7 @@ public class ChatService {
 
         messageRepository.save(newMessage);
 
-        Game existGame = gameRepository.findByName(createNewMessage.getGame()).get();
+        Game existGame = gameRepository.findByName(createNewMessage.getGame().toLowerCase()).orElseThrow();
         Chat existChat = existGame.getChat();
         List<Message> messageList = existChat.getData();
 
@@ -66,49 +64,5 @@ public class ChatService {
         log.info("all Message : " + messageList + " in Chat : " + existChat.getGame());
 
         return messageList;
-    }
-
-    //  create new reply in input game and parent message
-    public List<Message> createReply(CreateNewReply createNewReply) {
-
-        // TODO check if user with input game name exist
-
-        Message existParentMessage = messageRepository.findById(Long.parseLong(createNewReply.getParent())).get();
-
-        Message newReply = Message.builder()
-                .parent(existParentMessage)
-                .date(createNewReply.getDate())
-                .message(createNewReply.getMessage())
-                .username(createNewReply.getUsername())
-                .build();
-
-        messageRepository.save(newReply);
-
-        existParentMessage.getReplies().add(newReply);
-
-        Game existGame = gameRepository.findByName(createNewReply.getGame()).get();
-        Chat existChat = existGame.getChat();
-        List<Message> messageList = existChat.getData();
-
-        messageList.add(newReply);
-
-        chatRepository.save(existChat);
-
-        log.info("new  Reply : " + newReply + " in Parent Message : " + existParentMessage.getMessage());
-        log.info("all Message : " + messageList + " in Chat : " + existChat.getGame());
-
-        return messageList;
-    }
-
-    //  get all repy from game's chat
-    public Set<Message> getReplies(String messageId) {
-
-        // TODO check if user with input game name exist
-
-        Message existMessage = messageRepository.findById(Long.parseLong(messageId)).get();
-
-        log.info("all Reply : " + existMessage.getReplies() + " in Parent Mesage : " + existMessage.getMessage());
-
-        return existMessage.getReplies();
     }
 }

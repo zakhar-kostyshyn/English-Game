@@ -3,6 +3,16 @@ import {connect} from 'react-redux'
 import { Header, Menu, Icon, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { logoutUser, loadUser } from '../../../Actions/UserAction'
+import styled from 'styled-components'
+
+const StyledMenu = styled(Menu)`
+
+    background: #95b4f1 !important;
+    margin-bottom: 50px !important;
+    padding: 20px 20px 20px 40px;
+    border-radius: 2.5em !important;
+    box-shadow: 0 0 15px 2px #373636 !important;
+`
 
 
 class Navbar extends Component {
@@ -27,7 +37,7 @@ class Navbar extends Component {
         return (
             <header>
                 {/* Menu in navbar */}
-                <Menu>
+                <StyledMenu borderless>
                     <Menu.Item name='home' as={Link} to='/home'>
                         <Header>English Game</Header>
                     </Menu.Item>
@@ -52,7 +62,7 @@ class Navbar extends Component {
                             </Menu.Item>
                         }
                     </Menu.Menu>
-                </Menu>
+                </StyledMenu>
             </header>
         )
     }

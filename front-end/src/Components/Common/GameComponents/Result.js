@@ -28,9 +28,6 @@ class Result extends Component {
                     roundsInfo: cutLastElement
                 })
             }
-            
-        
-
     }
     
     render() {
@@ -183,24 +180,49 @@ class Result extends Component {
                         <Label
                             x={70}>
                             
-                        <Rect
-                            width={150}
-                            height={70}
-                            fill='white'
-                            stroke={10}
-                            strokeWidth={2}
-                        />   
+                            <Rect
+                                width={300}
+                                height={70}
+                                fill='white'
+                                stroke={10}
+                                strokeWidth={2}
+                            />   
 
-                        <Text
-                            width={150}
-                            height={70}
-                            align='center'
-                            verticalAlign='middle'
-                            text={'Score : ' + this.props.score}
-                            fontSize={30}   
-                            fontFamily='Berkshire Swash'
-                            fill='black'
-                        /> 
+                            <Text
+                                width={300}
+                                height={70}
+                                align='center'
+                                verticalAlign='middle'
+                                text={'Score : ' + this.props.score}
+                                fontSize={30}   
+                                fontFamily='Berkshire Swash'
+                                fill='black'
+                            /> 
+                        </Label>
+
+                        {/* INDEX OF SCORE REPRESENT */}
+                        <Label
+                            x={70}
+                            y={100}>
+                            
+                            <Rect
+                                width={300}
+                                height={70}
+                                fill='white'
+                                stroke={10}
+                                strokeWidth={2}
+                            />   
+
+                            <Text
+                                width={300}
+                                height={70}
+                                align='center'
+                                verticalAlign='middle'
+                                text={'Your Rang : ' + this.props.indexAddScore}
+                                fontSize={30}   
+                                fontFamily='Berkshire Swash'
+                                fill='black'
+                            /> 
                         </Label>
 
                     </Label>

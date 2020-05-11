@@ -2,14 +2,15 @@
 // StartGame contain together all layers of game layer-3 often deffer
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Stage, Text, Rect, Layer, Label, Group } from 'react-konva'
+import { Stage, Layer, Group } from 'react-konva'
 import ChooseTheme from '../GameComponents/ChooseTheme'
 import { getTheme, getImage } from '../../../Actions/ImageAction'
-import { allScoreFromGameWithName } from '../../../Actions/TableAction'
 import Result from '../GameComponents/Result'
 import VocabularyGame from '../../Games/VocabularyGame/VocabularyGame'
 import SpellingGame from '../../Games/SpellingGame/SpellingGame'
 import StartLayer from '../GameComponents/StartLayer'
+import { createNewScore } from '../../../Actions/ScoreAction'
+import moment from "moment"
 
 
 class StartGame extends Component {
@@ -26,7 +27,27 @@ class StartGame extends Component {
         playerData: null,
 
         task: null,
-        isTaskComplited: false
+        isTaskComplited: false,
+
+        //  ensure in DidUpdate that I make only one post request
+        isScorePost: false
+    }
+
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.layers[3] == 'layer-4' && !this.state.isScorePost) {
+
+            this.props.createNewScore(
+                this.props.component, 
+                this.props.username, 
+                this.state.playerScore,
+                moment())
+
+            //  only one
+            this.setState({
+                isScorePost: true
+            })
+        }
     }
 
     //  function for Spelling game
@@ -146,7 +167,11 @@ class StartGame extends Component {
             case 'layer-4':
                 return (
                     //  show table set to the props name of game
-                    <Result data={this.state.playerData} score={this.state.playerScore}/>
+                    <Result 
+                        data={this.state.playerData} 
+                        score={this.state.playerScore}
+                        indexAddScore={this.props.indexAddScore}
+                    />
                 )    
             default:
                 return('no layer');
@@ -167,7 +192,9 @@ class StartGame extends Component {
 }
 
 const mapStateToProps = state => ({
-    images: state.ImageReducer.images
+    images: state.ImageReducer.images,
+    indexAddScore: state.ScoreReducer.indexAddScore,
+    username: state.UserReducer.username
 })
 
-export default connect(mapStateToProps, { getTheme, allScoreFromGameWithName })(StartGame)
+export default connect(mapStateToProps, { getTheme, createNewScore })(StartGame)

@@ -17,7 +17,7 @@ class VocabularyGame extends Component {
 
     state = {
 
-        maxRound: 4,
+        maxRound: 11,
 
         stage: {
             width: 1000,

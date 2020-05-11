@@ -41,7 +41,7 @@ export const loginUser = (login, password) => dispatch => {
 export const loadUser = () => dispatch => {
 
     axios
-        .post("http://localhost:8081/user/load", setToken())
+        .post("http://localhost:8081/user/load", null, setToken())
         .then(res => {
             dispatch({
                 type: LOAD_SUCCESS,
@@ -93,7 +93,15 @@ export const setToken = () => {
 
     const token = localStorage.getItem('token')
     
-    if (token) axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    else axios.defaults.headers.common['Authorization'] = null
+    const config = {
+        headers : {
+            "Content-Type" : "application/json",
+        }
+    }
+
+    if(token) config.headers["Authorization"] = `Bearer ${token}`
+    
+    return config
+  
      
 }

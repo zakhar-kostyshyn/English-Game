@@ -6,8 +6,6 @@ import { Redirect } from 'react-router-dom';
 
 const StyledCardHeader = styled(CardHeader)`
     
-    padding-top: 100px;
-    padding-bottom: 100px;
     background-color: ${props => props.color};
 
 `
@@ -18,11 +16,8 @@ class CardView extends Component {
         redirect: false
     }
 
-    onRedirect = () => {
-        this.setState({
-            redirect: true
-        })
-    }
+    //  make state redirect true
+    onRedirect = () => this.setState({ redirect: true })
 
     render() {
 

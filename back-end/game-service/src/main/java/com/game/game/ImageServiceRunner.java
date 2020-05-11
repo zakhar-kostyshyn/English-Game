@@ -27,52 +27,40 @@ import java.util.*;
 @Slf4j
 public class ImageServiceRunner implements CommandLineRunner {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImageServiceRunner.class);
-
     @Autowired
     private ImageService imageService;
 
-    //  create Map<String, Set<MultipartFile>> where String - name of folder (ex. Animals) and Set - MultipartFile for images in this folder
-    private Map<String, Set<MultipartFile>> images = new HashMap<>();
-
-    //  create for comfortable work in showFiles() method
-    private Set<MultipartFile> tempSet = new HashSet<>();
-
-
     //  method which get all files from folder image in resources
     public void getAllImages() {
-        File[] files = null;
+        File[] files;
         try {
             files = ResourceUtils.getFile("classpath:images").listFiles();
-        } catch (FileNotFoundException e) {
+            Map<String, List<MultipartFile>> stringImagesMap = this.createMapFromImagesFolder(Objects.requireNonNull(files));
+            imageService.loadImageFromResource(stringImagesMap);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        assert files != null;
-        this.showFiles(files);
     }
 
-    //  method which recursively iterate through all images in folder images
-    //  populate images Map
-    //  in the end method call service method in GameService and give created Map
-    public void showFiles (File [] files) {
-        for (File file : files) {
-            if (file.isDirectory()) {
+    //  create and return map where key is String name of theme and values is List of Multioart images
+    public Map<String, List<MultipartFile>> createMapFromImagesFolder (File [] files) {
+        Map<String, List<MultipartFile>> map = new HashMap<>();
 
-                log.info("Directory: " + file.getName());
+        //  iterate through all directories
+        for (File directory : files) {
 
-                tempSet.clear();
-                showFiles(Objects.requireNonNull(file.listFiles()));
-                images.put(file.getName(), tempSet);
+            List<MultipartFile> list = new ArrayList<>();
+            log.info("Directory: " + directory.getName());
 
-            } else {
-
+            //  iterate through all files
+            for (File file : Objects.requireNonNull(directory.listFiles())) {
                 log.info("File: " + file.getName());
 
                 Path path = Paths.get(file.getPath());
                 String name = file.getName();
                 String originalFileName = file.getName();
                 String contentType = "image/png";
-                byte [] content = null;
+                byte[] content = null;
 
                 try {
                     content = Files.readAllBytes(path);
@@ -82,12 +70,18 @@ public class ImageServiceRunner implements CommandLineRunner {
 
                 MultipartFile result = new MockMultipartFile(name, originalFileName, contentType, content);
 
-                tempSet.add(result);
+                //  add file to list with all MultipartFile obj
+                list.add(result);
             }
+
+            //  add list with all MultipartFile obj to the images Map
+            map.put(directory.getName(), list);
         }
 
-        if (!images.isEmpty())
-            imageService.loadImageFromResource(images);
+
+        return map;
+
+
     }
 
     @Override

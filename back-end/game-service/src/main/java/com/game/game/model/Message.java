@@ -32,12 +32,4 @@ public class Message {
     @NotBlank(message = "Field 'date' must be filled")
     private String date;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "message_reply_id")
-    private Message parent;
-
-
-    @OneToMany(mappedBy = "parent")
-    private Set<Message> replies = new HashSet<>();
 }

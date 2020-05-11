@@ -19,4 +19,7 @@ public class CreateNewUserScore {
 
     @NotBlank(message = "Field 'score' must be filled")
     private String score;
+
+    @NotBlank(message = "Field 'scoreTime' must be filled")
+    private String scoreTime;
 }

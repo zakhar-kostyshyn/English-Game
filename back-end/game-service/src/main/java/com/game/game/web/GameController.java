@@ -37,7 +37,7 @@ public class GameController {
     }
 
     //  add new user's score to score set
-    @PostMapping("/score")
+    @PostMapping(value = "/score")
     public ResponseEntity<?> addNewScore(@Valid @RequestBody CreateNewUserScore createNewUserScore) {
         log.info("/game/ with posted " + createNewUserScore + " run");
         return ResponseEntity.ok(gameService.createScore(createNewUserScore));

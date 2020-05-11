@@ -74,7 +74,7 @@ class ChooseTheme extends Component {
 
 //  create array which contain cordinates for 2 line themes
 const labes = () => {
-    const textNames = ['Animals', 'Clothers', 'Foods', 'Home', 'Jobs', 'Numbers', 'Letters', 'Body', 'Colors', 'Places']
+    const textNames = ['Animals', 'Clothers', 'Food', 'Home', 'Jobs', 'Numbers', 'Sports', 'Body', 'Colors', 'Places']
     const array = []
     for (let i = 0, x = -320, y = -20; i < 10; i++, x += 150) { 
         if (i == 5) {

@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -32,7 +33,7 @@ public class Game {
     @JoinTable(name = "games_score_table",
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "score_id"))
-    private Set<Score> score = new TreeSet<>();
+    private Set<Score> score = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     private Chat chat;

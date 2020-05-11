@@ -22,44 +22,39 @@ public class ImageService {
 
     //  create and save new Image from input map
     //  update table
-    public void loadImageFromResource(Map<String, Set<MultipartFile>> mapImages) {
+    public void loadImageFromResource(Map<String, List<MultipartFile>> images) {
 
-        log.info("Input Map : " + mapImages);
+        log.info(String.valueOf(images.keySet()));
 
-        //  iterate through Map with String and Set and then trough Set with MultipartFile
-        mapImages.forEach((key, value) ->
-                value.forEach(file -> {
-                    Image newImage = null;
+        //  iterate through map first and list second and create Image obj for every MultiPartFile obj
+        images.forEach((k, v) -> {
+            v.forEach(i -> {
+                //  create new Image in DB only if it doesn't exist
+                if (!imageRepository.existsByName(i.getName()))
                     try {
-                        //  create Image
-                        newImage = Image.builder()
-                                .name(file.getName())
-                                .theme(key.trim())
-                                .image(file.getBytes())
-                                .build();
+                        imageRepository.save(Image.builder()
+                                .image(i.getBytes())
+                                .name(i.getName())
+                                .theme(k)
+                                .build());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+            });
+        });
 
-
-
-                    //  save Image if it no exist
-                    if (!imageRepository.existsByName(newImage.getName())) {
-                        log.info("new Image created and save ");
-                        imageRepository.save(newImage);
-                    }
-                }));
     }
 
     //  get Images by theme
     public List<Image> getImagesByTheme (String theme) {
         return imageRepository.findAllByTheme(theme)
-                    .orElseThrow(() -> new RuntimeException("no theme"));
+                    .orElseThrow(() -> new RuntimeException("no theme by : " + theme));
     }
 
     //  get Image by name
     public Image getImageByName (String name) {
         return imageRepository.findByName(name)
-                .orElseThrow(() -> new RuntimeException("no theme"));
+                .orElseThrow(() -> new RuntimeException("no name"));
     }
+
 }
