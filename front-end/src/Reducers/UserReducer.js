@@ -14,7 +14,8 @@ const initialState = {
     username: null,
     isLoginSuccess: false,        //  to indicate that user is logined 
     isUserCreate: false,           //  to indicate that user is registered    
-    roles: 'guest'
+    role: [],
+    email: ''
 }
 
 export default function(state = initialState, action) {
@@ -27,7 +28,9 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 isLoginSuccess: true,
-                username: action.payload.username
+                username: action.payload.username,
+                role: action.payload.roles,
+                email: action.payload.email
             }
         case INVALID_TOKEN:
             console.log("INVALID_TOKEN")

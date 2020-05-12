@@ -16,6 +16,7 @@ import Navbar from './Components/Common/Navigation/Navbar';
 import Footer from './Components/Common/Navigation/Footer';
 import SignIn from './Components/Common/Navigation/SignIn'
 import Score from './Components/GamesPages/Score'
+import Profile from './Components/GamesPages/Profile'
 
 const StyledContainer = styled(Container) `
 
@@ -63,6 +64,7 @@ class App extends React.Component {
               <Route exact path='/home/fast_vocab' component={FastVocab} />
               <Route exact path='/home/spelling' component={Spelling} />
               <Route exact path='/home/score' component={Score} />
+              <Route exact path='/home/profile' component={Profile} />
             </Switch>
             <Footer/>
             <Dimmer.Inner 

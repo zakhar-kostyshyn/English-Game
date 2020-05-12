@@ -49,9 +49,9 @@ class Navbar extends Component {
                                 <Menu.Item>
                                     <Dropdown icon='user'>
                                         <Dropdown.Menu>
-                                            <Dropdown.Item>Profile</Dropdown.Item>
+                                            <Dropdown.Item as={Link} to='/home/profile'>Profile</Dropdown.Item>
                                             <Dropdown.Item onClick={this.onLogOut}>Log Out</Dropdown.Item>
-                                            <Dropdown.Item>Class</Dropdown.Item>
+                                            <Dropdown.Item onClick={this.onStatsShow}>Stats</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Menu.Item>
