@@ -7,7 +7,8 @@ import {
     CREATE_USER_FAIL,
     LOGOUT,
     LOAD_SUCCESS,
-    INVALID_TOKEN
+    INVALID_TOKEN,
+    LOADING
 } from '../types'
 
 //  login user by username and password
@@ -74,19 +75,16 @@ export const createUser = (name, surname, username, password, email) => dispatch
                 payload: res.data
             })
         })
-        .catch(() => {
-            dispatch({
-                type: CREATE_USER_FAIL
-            })
-        })
+        .catch(() => dispatch({ type: CREATE_USER_FAIL })
+    )
 
 }
 
-export const logoutUser = () => dispatch => {
-    dispatch({
-        type: LOGOUT
-    })
-}
+export const logoutUser = () => dispatch => dispatch({ type: LOGOUT })
+
+
+export const loadingUser = () => dispatch =>  { console.log('loading'); dispatch({ type: LOADING }) }
+
 
 //  set token to Authorization
 export const setToken = () => {
@@ -102,6 +100,4 @@ export const setToken = () => {
     if(token) config.headers["Authorization"] = `Bearer ${token}`
     
     return config
-  
-     
 }

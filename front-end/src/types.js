@@ -8,9 +8,12 @@ export const CREATE_USER_FAIL = "CREATE_USER_FAIL"
 export const LOGOUT = "LOGOUT"
 export const LOAD_SUCCESS = "LOAD_SUCCESS"
 export const INVALID_TOKEN = "INVALID_TOKEN"
+export const LOADING = "LOADING"
 
 export const POST_MESSAGE = "POST_MESSAGE"
 export const GET_CHAT = "GET_CHAT"
 
 export const GET_SCORE = "GET_SCORE"
 export const POST_SCORE = "POST_SCORE"
+
+export const GET_DESCRIPTION = "GET_DESCRIPTION"

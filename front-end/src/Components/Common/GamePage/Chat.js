@@ -22,7 +22,7 @@ const StyledCommentGroup = styled(CommentGroup) `
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     padding-inline-start: 40px;
-    margin: 50px 50px 10px !important
+    margin-left: 30px !important
 
 `
 
@@ -67,22 +67,28 @@ class Chat extends Component {
     
 
     render() {
+
+        //  indicate max count of comments on page
+        let maxComments = 7
+
         //  check if message already loaded
         if (this.props.messages) 
             return (
                 <StyledCommentGroup>
 
-                    {this.props.messages.map(message => (   //  represent all message from game 
-                        <StyledComment key={message.id}>
-                            <Comment.Content>
-                                <Comment.Author as='a' >{message.username}</Comment.Author>
-                                <Comment.Metadata>
-                                    <div>{dataCounter(message.date)}</div>
-                                </Comment.Metadata>
-                                <Comment.Text>{message.message}</Comment.Text>
-                            </Comment.Content>
-                        </StyledComment>
-                    ))}
+                    {this.props.messages.slice().reverse()
+                        .filter(() => maxComments > 0 ? maxComments-- : false)
+                        .map(message => (   //  represent all message from game 
+                            <StyledComment key={message.id}>
+                                <Comment.Content>
+                                    <Comment.Author as='a' >{message.username}</Comment.Author>
+                                    <Comment.Metadata>
+                                        <div>{dataCounter(message.date)}</div>
+                                    </Comment.Metadata>
+                                    <Comment.Text>{message.message}</Comment.Text>
+                                </Comment.Content>
+                            </StyledComment>
+                        ))}
                     
                     {/* FORM */}
                     {this.props.isLoginSuccess ? 

@@ -29,7 +29,6 @@ public class GameService {
     //  get all game's score by game name
     public Set<Score> getGameScore(String name) {
 
-        // TODO check if user with input game name exist
         Set<Score> scores = gameRepository.findByName(name.toLowerCase())
                 .orElseThrow(() -> new RuntimeException("table " + name + " is not exist"))
                 .getScore();
@@ -70,6 +69,18 @@ public class GameService {
         log.info("index of created score is : " + index);
 
         return index;
+    }
+
+    public String getGameDescription(String name) {
+
+        String description = gameRepository.findByName(name.toLowerCase())
+                .orElseThrow(() -> new RuntimeException("table " + name + " is not exist"))
+                .getDescription();
+
+        log.info("all Score : " + description + " in Game : " + name);
+
+        return description;
+
     }
 
 }

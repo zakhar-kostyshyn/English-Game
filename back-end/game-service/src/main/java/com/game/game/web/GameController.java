@@ -24,16 +24,16 @@ public class GameController {
     private GameService gameService;
 
     //  get all game's score by game name
-    @GetMapping("/{name}")
+    @GetMapping("/score/{name}")
     public ResponseEntity<?> getScore(@Valid @PathVariable String name) {
-        log.info("/game/{" + name + "} run");
+        log.info("/game/score{" + name + "} run");
         return ResponseEntity.ok(gameService.getGameScore(name));
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<?> test(HttpServletRequest request) {
-        log.info(request.getRemoteAddr());
-        return ResponseEntity.ok("test");
+    @GetMapping("/text/{name}")
+    public ResponseEntity<?> test(@Valid @PathVariable String name) {
+        log.info("/game/text{" + name + "} run");
+        return ResponseEntity.ok(gameService.getGameDescription(name));
     }
 
     //  add new user's score to score set

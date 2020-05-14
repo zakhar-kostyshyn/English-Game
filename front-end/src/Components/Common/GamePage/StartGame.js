@@ -2,15 +2,17 @@
 // StartGame contain together all layers of game layer-3 often deffer
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Segment } from 'semantic-ui-react'
 import { Stage, Layer, Group } from 'react-konva'
 import ChooseTheme from '../GameComponents/ChooseTheme'
-import { getTheme, getImage } from '../../../Actions/ImageAction'
+import { getTheme } from '../../../Actions/ImageAction'
 import Result from '../GameComponents/Result'
 import VocabularyGame from '../../Games/VocabularyGame/VocabularyGame'
 import SpellingGame from '../../Games/SpellingGame/SpellingGame'
 import StartLayer from '../GameComponents/StartLayer'
 import { createNewScore } from '../../../Actions/ScoreAction'
 import moment from "moment"
+
 
 
 class StartGame extends Component {
@@ -34,7 +36,8 @@ class StartGame extends Component {
     }
 
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate() {
+        //  when game end post score  
         if (this.state.layers[3] == 'layer-4' && !this.state.isScorePost) {
 
             this.props.createNewScore(
@@ -150,7 +153,9 @@ class StartGame extends Component {
             case 'layer-1':
                 return (
                     //  start and rewiev layer
-                    <StartLayer changeLayerReturn={this.startChangeLayerReturn}/>
+                    <StartLayer 
+                        changeLayerReturn={this.startChangeLayerReturn} 
+                        component={this.props.component}/>
                 )
             case 'layer-2':
                 return (
@@ -180,13 +185,15 @@ class StartGame extends Component {
 
     render() {         
         return (
-            <Stage width={1000} height={650}>
-                    {this.state.layers.map(layer => ( 
-                        <Layer key={layer}>
-                            {this.layersShow(layer)}
-                        </Layer>
-                    ))}
-            </Stage>
+            <Segment style={{ margin: 'auto'}}>
+                <Stage width={1000} height={650}>
+                        {this.state.layers.map(layer => ( 
+                            <Layer key={layer}>
+                                {this.layersShow(layer)}
+                            </Layer>
+                        ))}
+                </Stage>
+            </Segment>
         )
     }
 }

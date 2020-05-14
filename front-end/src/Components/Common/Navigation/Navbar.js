@@ -25,12 +25,10 @@ class Navbar extends Component {
         this.props.logoutUser();
     }
 
-    componentDidMount() {
-        
+    componentDidMount() {        
         //  if token exist in local storage load user
         if (localStorage.getItem("token"))
             this.props.loadUser()
-            
     }
 
     render() {
@@ -50,8 +48,8 @@ class Navbar extends Component {
                                     <Dropdown icon='user'>
                                         <Dropdown.Menu>
                                             <Dropdown.Item as={Link} to='/home/profile'>Profile</Dropdown.Item>
-                                            <Dropdown.Item onClick={this.onLogOut}>Log Out</Dropdown.Item>
-                                            <Dropdown.Item onClick={this.onStatsShow}>Stats</Dropdown.Item>
+                                            <Dropdown.Item as={Link} to='/home' onClick={this.onLogOut}>Log Out</Dropdown.Item>
+                                            <Dropdown.Item >Stats</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Menu.Item>

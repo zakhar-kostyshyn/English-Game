@@ -327,18 +327,11 @@ class VocabularyGame extends Component {
     onClickPause = () => {
         if (this.state.isTimeStop) { 
             this.startTimer(); 
-            this.setState({ isTimeStop: false, time: --this.state.time }) 
+            this.setState({ isTimeStop: false }) 
         } else this.setState({ isTimeStop: true })
     }
 
-    onClickBack = () => {
-
-        //  stop timer
-        clearInterval(this.state.tick)
-
-        this.toDefaultState()
-        this.props.changeLayerReturn('layer-1')
-    }
+    onClickBack = () => window.location.reload()
 
     /////////   events handlers  ///////////
 

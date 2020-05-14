@@ -29,6 +29,10 @@ public class Game {
     @Size(max = 50)
     private String name;
 
+    @NotBlank(message = "Field 'description' must be filled")
+    @Size(max = 500)
+    private String description;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "games_score_table",
             joinColumns = @JoinColumn(name = "game_id"),

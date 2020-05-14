@@ -115,7 +115,7 @@ class SpellingGame extends Component {
                 rightWord: imgName,
                 letters: randomSuffleLetters,
                 allImages: this.state.allImages.filter(image => image.id != img.id)
-            })
+            }, () => speechSynthesis.speak(new SpeechSynthesisUtterance(this.state.rightWord))) // say new word
         }
 
     }
@@ -142,7 +142,7 @@ class SpellingGame extends Component {
     correctAnswerHandler = () => {
 
         //  say well play
-        speechSynthesis.speak(new SpeechSynthesisUtterance("well play"))
+        speechSynthesis.speak(new SpeechSynthesisUtterance("correct"))
 
         const streak = 100 * this.state.streak
 
@@ -169,9 +169,6 @@ class SpellingGame extends Component {
     }
 
     microTaskComplited = () => {
-
-        //  say complite word
-        speechSynthesis.speak(new SpeechSynthesisUtterance(this.state.rightWord))
 
         //  stop timer
         clearInterval(this.state.tick)
@@ -246,18 +243,12 @@ class SpellingGame extends Component {
     onClickPause = () => {
         if (this.state.isTimeStop) { 
             this.startTimer(); 
-            this.setState({ isTimeStop: false, time: --this.state.time }) 
+            this.setState({ isTimeStop: false }) 
         } else this.setState({ isTimeStop: true })
     }
     
-    onClickBack = () => {
+    onClickBack = () => window.location.reload()
 
-        //  stop timer
-        clearInterval(this.state.tick)
-
-        this.toDefaultState()
-        this.props.changeLayerReturn('layer-1')
-    }
         
     onClickLetterButton = e => {
         //  chek if pressed letter match with curent successLetterIndex

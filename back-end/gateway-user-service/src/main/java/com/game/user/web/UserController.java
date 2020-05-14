@@ -1,14 +1,13 @@
 package com.game.user.web;
 
-import com.game.user.DAO.CreateUser;
-import com.game.user.DAO.LoginUser;
+import com.game.user.payload.CreateUser;
+import com.game.user.payload.LoginUser;
 import com.game.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController

@@ -7,7 +7,7 @@ import { dataCounter } from '../Common/GamePage/Chat'
 class Score extends Component {
 
     componentDidMount() {
-        this.props.getAllScore(this.props.location.state.gameName)
+        this.props.getAllScore(localStorage.gameName)
     }
 
     render() {

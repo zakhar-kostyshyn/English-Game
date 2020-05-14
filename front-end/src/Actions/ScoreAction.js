@@ -7,7 +7,7 @@ import {
 //  action for getting all score from game
 export const getAllScore = gameName => dispatch => {
     axios
-        .get(`http://localhost:8084/game/${gameName}`)
+        .get(`http://localhost:8084/game/score/${gameName}`)
         .then(res => {
             dispatch({
                 type: GET_SCORE,

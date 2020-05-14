@@ -20,6 +20,8 @@ class Profile extends Component {
                 <Header as='h1' >PROFILE</Header>
                 <Header as='h3' >{'Your Email: ' + this.props.email}</Header>
                 <Header as='h3' >{'Your Username: ' + this.props.username}</Header>
+                <Header as='h3' >{'Your Name: ' + this.props.name}</Header>
+                <Header as='h3' >{'Your Surname: ' + this.props.surname}</Header>
             </StyledSegment>
         )
     }
@@ -28,6 +30,8 @@ class Profile extends Component {
 const mapStateToProps = state => ({
     email: state.UserReducer.email,
     username: state.UserReducer.username,
+    name: state.UserReducer.name,
+    surname: state.UserReducer.surname
 })
 
 export default connect(mapStateToProps)(Profile)

@@ -1,8 +1,8 @@
 package com.game.user.service;
 
-import com.game.user.DAO.CreateUser;
-import com.game.user.DAO.JwtResponse;
-import com.game.user.DAO.LoginUser;
+import com.game.user.payload.CreateUser;
+import com.game.user.payload.JwtResponse;
+import com.game.user.payload.LoginUser;
 import com.game.user.model.ERoles;
 import com.game.user.model.Role;
 import com.game.user.model.User;
@@ -18,16 +18,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.game.user.security.SecurityConstants.AUTHORIZATION;
 import static com.game.user.security.SecurityConstants.BEARER;
 
 @Service
@@ -142,6 +139,8 @@ public class UserService {
                 .collect(Collectors.toList());
 
         return JwtResponse.builder()
+                .surname(userDetails.getSurname())
+                .name(userDetails.getName())
                 .token(token)
                 .id(userDetails.getId())
                 .username(userDetails.getUsername())

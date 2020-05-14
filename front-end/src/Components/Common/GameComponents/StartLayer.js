@@ -18,7 +18,7 @@ class StartLayer extends Component {
                     height={stage.height}
                     align="center"
                     verticalAlign='middle'
-                    text='Fast Vocabulary Game'
+                    text={'Game ' + this.props.component}
                     fontSize={70}   
                     fontFamily='Berkshire Swash'
                     stroke='grey'
@@ -37,8 +37,12 @@ class StartLayer extends Component {
                         strokeWidth={10}
                         cornerRadius={50}/>
                     <Text
-                        offsetX={50}
-                        offsetY={25}
+                        width={300}
+                        height={100}
+                        offsetX={150}
+                        offsetY={50}
+                        align="center"
+                        verticalAlign='middle'
                         text='Start'
                         fontSize={50}   
                         fontFamily='Berkshire Swash'
@@ -59,8 +63,12 @@ class StartLayer extends Component {
                         strokeWidth={10}
                         cornerRadius={50}/>
                     <Text
-                        offsetX={50}
-                        offsetY={18}
+                        width={200}
+                        height={70}
+                        offsetX={100}
+                        offsetY={35}
+                        align="center"
+                        verticalAlign='middle'
                         text='Rewiev'
                         fontSize={30}   
                         fontFamily='Berkshire Swash'

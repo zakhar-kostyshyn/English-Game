@@ -6,7 +6,8 @@ import {
     CREATE_USER_FAIL,
     LOGOUT,
     LOAD_SUCCESS,
-    INVALID_TOKEN
+    INVALID_TOKEN,
+    LOADING
 } from '../types'
 
 const initialState = {
@@ -14,12 +15,21 @@ const initialState = {
     username: null,
     isLoginSuccess: false,        //  to indicate that user is logined 
     isUserCreate: false,           //  to indicate that user is registered    
+    isUserLoading: false,
     role: [],
-    email: ''
+    email: null,
+    name: null, 
+    surname: null
 }
 
 export default function(state = initialState, action) {
     switch(action.type) {
+        case LOADING: 
+            console.log('LOADING')
+            return {
+                ...state,
+                isUserLoading: true
+            }
         case LOAD_SUCCESS:
             console.log('LOAD_SUCCESS')
         case LOGIN_SUCCESS:
@@ -27,10 +37,13 @@ export default function(state = initialState, action) {
             localStorage.setItem("token", action.payload.token)
             return {
                 ...state,
+                isUserLoading: false,
                 isLoginSuccess: true,
                 username: action.payload.username,
                 role: action.payload.roles,
-                email: action.payload.email
+                email: action.payload.email,
+                name: action.payload.name,
+                surname: action.payload.surname
             }
         case INVALID_TOKEN:
             console.log("INVALID_TOKEN")
@@ -43,6 +56,7 @@ export default function(state = initialState, action) {
             console.log("CREATE_USER_SUCCESS");
             return {
                 ...state,
+                isUserLoading: false,
                 isUserCreate: true,
             }
         case CREATE_USER_FAIL:
@@ -57,7 +71,8 @@ export default function(state = initialState, action) {
                 ...state,
                 username: null,
                 isLoginSuccess: false,       
-                isUserCreate: false 
+                isUserCreate: false, 
+                isUserLoading: false
             }
         default:
             return {

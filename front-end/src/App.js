@@ -18,20 +18,11 @@ import SignIn from './Components/Common/Navigation/SignIn'
 import Score from './Components/GamesPages/Score'
 import Profile from './Components/GamesPages/Profile'
 
-const StyledContainer = styled(Container) `
-
-    margin-top: 60px !important;
-    background: white !important;
-    padding: 50px !important;
-
-`
-
 const StyledSegment = styled(Segment) `
 
     background: #8ff0f7 !important;
 
 `
-
 class App extends React.Component {
 
   state = {
@@ -46,11 +37,7 @@ class App extends React.Component {
   closeDimmer = () => this.setState({ show: false, showRegistrate: false })
 
   //  make change to show registrate component or signIn Segment
-  onRegistrate = () => {
-    this.setState({
-        showRegistrate: this.setState.showRegistrate ? false : true
-    })
-  }
+  onRegistrate = () => this.setState({ showRegistrate: this.state.showRegistrate ? false : true })  
 
   render() {
     return (
@@ -72,9 +59,7 @@ class App extends React.Component {
                 as={Segment} 
                 active={this.state.show} 
                 onClickOutside={this.closeDimmer}>
-                <StyledContainer>
-                    <SignIn closeDimmer={this.closeDimmer} showRegistrate={this.state.showRegistrate} onRegistrate={this.onRegistrate}/>
-                </StyledContainer>
+                <SignIn closeDimmer={this.closeDimmer} showRegistrate={this.state.showRegistrate} onRegistrate={this.onRegistrate}/>
             </Dimmer.Inner>
           </Dimmer.Dimmable>
         </Router>

@@ -1,4 +1,4 @@
-package com.game.user.DAO;
+package com.game.user.payload;
 
 import lombok.Getter;
 import lombok.Setter;

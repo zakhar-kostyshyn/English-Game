@@ -102,7 +102,7 @@ class Result extends Component {
                                     y={150}
                                     width={600}
                                     height={60}
-                                    text={'Time : ' + r.time + ':00'}
+                                    text={'Time : ' + r.time + 'sec'}
                                     fontSize={30}   
                                     fontFamily='Berkshire Swash'
                                     fill='black'
@@ -203,7 +203,9 @@ class Result extends Component {
                         {/* INDEX OF SCORE REPRESENT */}
                         <Label
                             x={70}
-                            y={100}>
+                            y={100}
+                            //  if user is not authenticate than indexAddScore = 0 and don't show
+                            visible={this.props.indexAddScore}>
                             
                             <Rect
                                 width={300}
