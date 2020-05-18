@@ -22,11 +22,11 @@ public class Image {
     private Long ID;
 
     @NotBlank(message = "Field 'name' must be filled")
-    @Size(max = 50)
+    @Size(max = 100)
     private String name;
 
     @NotBlank(message = "Field 'theme' must be filled")
-    @Size(max = 50)
+    @Size(max = 100)
     private String theme;
 
     @Lob

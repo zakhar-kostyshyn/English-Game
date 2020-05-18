@@ -173,6 +173,8 @@ class Result extends Component {
 
                                 </Label>
 
+                                
+
                             </Label>
                         ))}      
                             
@@ -225,6 +227,34 @@ class Result extends Component {
                                 fontFamily='Berkshire Swash'
                                 fill='black'
                             /> 
+                        </Label>
+
+                        {/* BACK */}
+                        <Label
+                            x={-100}
+                            y={200}>
+                            
+                            <Rect
+                                width={200}
+                                height={100}
+                                fill='white'
+                                stroke={10}
+                                strokeWidth={5}
+                                cornerRadius={15}
+                            />   
+
+                            <Text
+                                width={200}
+                                height={100}
+                                align='center'
+                                verticalAlign='middle'
+                                text='Play Again'
+                                fontSize={30}   
+                                fontFamily='Berkshire Swash'
+                                fill='black'
+                                onClick={window.location.reload()}
+                            /> 
+
                         </Label>
 
                     </Label>

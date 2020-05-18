@@ -64,7 +64,6 @@ class LetterSpelling extends Component {
                             onClick={this.onClick}
                         />
 
-                        
                     </Label>
                 ))}
               

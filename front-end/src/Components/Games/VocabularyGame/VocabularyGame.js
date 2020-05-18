@@ -17,7 +17,7 @@ class VocabularyGame extends Component {
 
     state = {
 
-        maxRound: 11,
+        maxRound: 10,
 
         stage: {
             width: 1000,
@@ -230,7 +230,7 @@ class VocabularyGame extends Component {
             words.push(this.state.firstLineImages[i].name)
 
         //  check the end of rounds 
-        if (this.state.round + 1 == this.state.maxRound) 
+        if (this.state.round == this.state.maxRound) 
             this.setState({
                 statePlayerData: [...this.state.statePlayerData, {
                     round: this.state.round,

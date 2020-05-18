@@ -4,6 +4,25 @@ import Backgroud from './Backgroud'
 
 class StartLayer extends Component {
 
+    onStartGame = () => {
+    
+        switch(this.props.component) {
+            case 'Time':
+                console.log('Time at now')
+                break;
+            case 'Phrase':
+                this.props.setTheme('phrases')
+                break;
+            case 'Spelling':
+            case 'Vocabulary':
+                this.props.changeLayerReturn()
+                break;
+            default: console.log('no game')
+        }
+            
+
+    }
+
     render() {
         const stage = {
             width: 1000,
@@ -26,7 +45,7 @@ class StartLayer extends Component {
                 <Label 
                     x={stage.width / 2}
                     y={stage.height / 2 + 70}
-                    onClick={this.props.changeLayerReturn}>
+                    onClick={this.onStartGame}>
                     <Rect
                         width={300}
                         height={100}

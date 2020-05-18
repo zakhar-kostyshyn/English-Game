@@ -3,16 +3,17 @@ import { Label } from 'react-konva'
 import Loading from '../../Common/GameComponents/Loading'
 import * as _ from 'lodash'
 import Backgroud from '../../Common/GameComponents/Backgroud'
-import ImageSpelling from './ImageSpelling'
-import LetterSpelling from './LetterSpelling'
-import WordSpelling from './WordSpelling'
 import BackPauseRound from '../../Common/GameComponents/BackPauseRound'
 import Streak from '../../Common/GameComponents/Streak'
 import Time from '../../Common/GameComponents/Time'
 import Score from '../../Common/GameComponents/Score'
 import TimeLine from '../../Common/GameComponents/TimeLine'
+import ImagePhrase from './ImagePhrase'
+import TextPhrase from './TextPhrase'
+import WordsPhrase from './WordsPhrase'
 
-class SpellingGame extends Component {
+
+class PharaseGame extends Component {
 
     state = {
 
@@ -26,9 +27,9 @@ class SpellingGame extends Component {
         image: null, 
         allImages: [],
 
-        letters: [],
-        rightWord: "",
-        successLetterIndex: 0,
+        text: [],
+        shuffleWords: [],
+        successWordIndex: 0,
 
         streak: 0,
         score: 0,
@@ -55,8 +56,8 @@ class SpellingGame extends Component {
                     allImages: this.props.allImages
                 }, () => this.startGameProcess())            
 
-        //  allow if letters for word was correct given (micro task passed) 
-        if (this.state.successLetterIndex == this.state.rightWord.length && this.state.rightWord.length > 0)     
+        //  allow if all words for text was correct given (micro task passed) 
+        if (this.state.successWordIndex == this.state.text.length && this.state.text.length > 0)     
             this.microTaskComplited()
     }
     
@@ -72,7 +73,7 @@ class SpellingGame extends Component {
     /////////   play process  ///////////
 
     startGameProcess = () => {
-        this.getImageWordLetters()
+        this.getImageAndWords()
         this.startTimer() 
     }
 
@@ -93,31 +94,24 @@ class SpellingGame extends Component {
         })
     }
 
-    getImageWordLetters = () => {
+    getImageAndWords = () => {
 
         const img = _.sample(this.state.allImages)                    //  get image 
         const imgName = img.name.substring(0, img.name.length - 4)     //  get name from image
 
-        const rightLetters = _.split(imgName, '');                         //  split on letters
-        const randomLetters = rightLetters                              
-
-        let size = rightLetters.length
-        while (size++ < 15) 
-            randomLetters.push(String.fromCharCode(_.random(97, 122)))   // add random letters to 15
-        
-        const randomSuffleLetters = _.shuffle(randomLetters)            //  shuffle
+        const words = _.split(imgName, ' ')        
+        const randomSuffleWords = _.shuffle(words)            //  shuffle
 
         const workImg = new Image()
         workImg.src = `data:image/png;base64,${img.image}` 
         workImg.onload = () => {
             this.setState({
                 image: workImg,
-                rightWord: imgName,
-                letters: randomSuffleLetters,
+                text: words,
+                shuffleWords: randomSuffleWords,
                 allImages: this.state.allImages.filter(image => image.id != img.id)
-            }, () => speechSynthesis.speak(new SpeechSynthesisUtterance(this.state.rightWord))) // say new word
+            })
         }
-
     }
 
     toDefaultState = () => {
@@ -125,9 +119,9 @@ class SpellingGame extends Component {
             image: null, 
             allImages: [],
 
-            letters: [],
-            rightWord: "",
-            successLetterIndex: 0,
+            shuffleWords: [],
+            text: [],
+            successWordIndex: 0,
 
             streak: 0,
             time: 0,
@@ -142,13 +136,13 @@ class SpellingGame extends Component {
     correctAnswerHandler = () => {
 
         //  say well play
-        speechSynthesis.speak(new SpeechSynthesisUtterance("correct"))
+        speechSynthesis.speak(new SpeechSynthesisUtterance(this.state.text[this.state.successWordIndex]))
 
         const streak = 100 * this.state.streak
 
         //  increase score, streak, right answer and letter index 
         this.setState({
-            successLetterIndex: ++this.state.successLetterIndex,
+            successWordIndex: ++this.state.successWordIndex,
             score: this.state.time < 10 ? this.state.score + 200 + streak : this.state.score + 100 + streak,
             right: ++this.state.right,
             streak: this.state.streak == 6 ? this.state.streak : ++this.state.streak,
@@ -170,12 +164,14 @@ class SpellingGame extends Component {
 
     microTaskComplited = () => {
 
+        speechSynthesis.speak(new SpeechSynthesisUtterance(_.join(this.state.text, ' ')))
+
         //  stop timer
         clearInterval(this.state.tick)
 
         //  make word to array for normal represent with vocabulary 3 words in result
         let words = []
-        words.push(this.state.rightWord)
+        words.push(_.join(this.state.text, ' '))
 
         //  check the end of rounds 
         if (this.state.round == this.state.maxRound) 
@@ -203,7 +199,7 @@ class SpellingGame extends Component {
                     mark: this.state.error > this.state.right ? 'Bad' : this.state.error != 0 ? 'Good' : "Well Done"
                 }],
 
-                successLetterIndex: 0,
+                successWordIndex: 0,
                 score: this.state.score + 300,
 
                 //  increase count of rounds
@@ -212,8 +208,7 @@ class SpellingGame extends Component {
 
                 time: 0,
                 image: null,
-                letters: [],
-                rightWord: "", 
+                words: [],
                 right: 0,
                 error: 0
 
@@ -250,9 +245,9 @@ class SpellingGame extends Component {
     onClickBack = () => window.location.reload()
 
         
-    onClickLetterButton = e => {
-        //  chek if pressed letter match with curent successLetterIndex
-        if (e.target.attrs.text == this.state.rightWord.charAt(this.state.successLetterIndex)) 
+    onClickWordButton = e => {
+        //  chek if pressed word match with curent successWordIndex
+        if (e.target.attrs.text == this.state.text[this.state.successWordIndex]) 
             this.correctAnswerHandler()
         else this.wrongAnswerHandler()
     }
@@ -268,7 +263,7 @@ class SpellingGame extends Component {
                     <Backgroud/>
                     
                     {/* IMAGE  */}
-                    <ImageSpelling image={this.state.image}/>
+                    <ImagePhrase image={this.state.image}/>
              
                     {/* BACK PAUSE ROUND */}
                     <BackPauseRound
@@ -286,20 +281,20 @@ class SpellingGame extends Component {
                     {/* SCORE */}
                     <Score score={this.state.score}/>
 
-                    {/* LETTERS */}
-                    <LetterSpelling 
-                        letters={this.state.letters} 
-                        clickLetterButtonReturn={this.onClickLetterButton} 
-                        isPause={this.state.isTimeStop}
-                    />
-
                     {/* TIME LINE */}
                     <TimeLine time={this.state.time}/>
                     
                     {/* WORD REPRESENT */}
-                    <WordSpelling 
-                        rightWord={this.state.rightWord} 
-                        successLetterIndex={this.state.successLetterIndex}
+                    <TextPhrase 
+                        text={this.state.text} 
+                        successWordIndex={this.state.successWordIndex}
+                    />
+
+                    {/* WORDS */}
+                    <WordsPhrase
+                        words={this.state.shuffleWords}
+                        clickWordButtonReturn={this.onClickWordButton} 
+                        isPause={this.state.isTimeStop}
                     />
 
                 </Label>
@@ -309,4 +304,4 @@ class SpellingGame extends Component {
 }
 
 
-export default SpellingGame
+export default PharaseGame

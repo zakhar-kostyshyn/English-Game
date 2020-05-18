@@ -9,6 +9,8 @@ import { getTheme } from '../../../Actions/ImageAction'
 import Result from '../GameComponents/Result'
 import VocabularyGame from '../../Games/VocabularyGame/VocabularyGame'
 import SpellingGame from '../../Games/SpellingGame/SpellingGame'
+import PhraseGame from '../../Games/PhraseGame/PhraseGame'
+import TimeGame from '../../Games/TimeGame/TimeGame'
 import StartLayer from '../GameComponents/StartLayer'
 import { createNewScore } from '../../../Actions/ScoreAction'
 import moment from "moment"
@@ -53,9 +55,6 @@ class StartGame extends Component {
         }
     }
 
-    //  function for Spelling game
-////////////////////////////////////
-
 
     //  save date and score from game 
     gamePlayerDataAndScoreReturn = (data, score) => {
@@ -66,7 +65,6 @@ class StartGame extends Component {
     }
 
     //  changeLayer already is
-
     task = isComlited => {
         this.setState({
             isTaskComplited: isComlited
@@ -75,7 +73,7 @@ class StartGame extends Component {
 
     startChangeLayerReturn = () => this.changeLayer('layer-2')
 
-////////////////////////////////////
+
 
     //  change array of layers, remove input layer and insert in the end of array
     //  to display on canvas
@@ -132,14 +130,34 @@ class StartGame extends Component {
                 return (
                     <SpellingGame
                         currentLayer={this.state.layers}
-                        scoreReturn={this.scoreReturn}
                         allImages={this.props.images}
                         gamePlayerDataAndScoreReturn={this.gamePlayerDataAndScoreReturn}
                         changeLayerReturn={this.changeLayer}
                         task={this.state.task}
                         taskReturn={this.taskReturn}
                     />
-                )   
+                ) 
+            case 'Phrase' :
+                return (
+                    <PhraseGame
+                        currentLayer={this.state.layers}
+                        allImages={this.props.images}
+                        gamePlayerDataAndScoreReturn={this.gamePlayerDataAndScoreReturn}
+                        changeLayerReturn={this.changeLayer}
+                        task={this.state.task}
+                        taskReturn={this.taskReturn}
+                    />
+                ) 
+            case 'Time' :
+                return (
+                    <TimeGame
+                        currentLayer={this.state.layers}
+                        gamePlayerDataAndScoreReturn={this.gamePlayerDataAndScoreReturn}
+                        changeLayerReturn={this.changeLayer}
+                        task={this.state.task}
+                        taskReturn={this.taskReturn}
+                    />
+                )  
             //  TODO more cases for each game
             default:
                 return('no game')
@@ -154,6 +172,7 @@ class StartGame extends Component {
                 return (
                     //  start and rewiev layer
                     <StartLayer 
+                        setTheme={this.setTheme}
                         changeLayerReturn={this.startChangeLayerReturn} 
                         component={this.props.component}/>
                 )

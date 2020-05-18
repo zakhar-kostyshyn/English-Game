@@ -6,11 +6,13 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import { Provider } from "react-redux";
 import store from './store'
 import 'semantic-ui-css/semantic.min.css';
-import { Dimmer, Segment, Container } from 'semantic-ui-react'
+import { Dimmer, Segment } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 import Home from './Components/GamesPages/Home';
 import FastVocab from './Components/GamesPages/FastVocab';
+import Phrase from './Components/GamesPages/Phrase';
+import Time from './Components/GamesPages/Time';
 import Spelling from './Components/GamesPages/Spelling';
 import Navbar from './Components/Common/Navigation/Navbar';
 import Footer from './Components/Common/Navigation/Footer';
@@ -50,6 +52,8 @@ class App extends React.Component {
               <Route exact path='/home' component={Home} />
               <Route exact path='/home/fast_vocab' component={FastVocab} />
               <Route exact path='/home/spelling' component={Spelling} />
+              <Route exact path='/home/phrase' component={Phrase} />
+              <Route exact path='/home/time' component={Time} />
               <Route exact path='/home/score' component={Score} />
               <Route exact path='/home/profile' component={Profile} />
             </Switch>
