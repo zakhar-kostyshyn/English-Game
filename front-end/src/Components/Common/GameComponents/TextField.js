@@ -3,7 +3,7 @@ import { Rect, Label, Text } from 'react-konva'
 import * as _ from 'lodash'
 
 
-class TextPhrase extends Component {
+class TextField extends Component {
 
     state = {
         text: []
@@ -68,4 +68,4 @@ class TextPhrase extends Component {
     }
 }
 
-export default TextPhrase
+export default TextField

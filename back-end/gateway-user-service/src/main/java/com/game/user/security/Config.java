@@ -55,7 +55,7 @@ public class Config extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests(auth -> auth
                     .mvcMatchers("/game-service/", "/user").permitAll()
-                    .mvcMatchers("/game-service/chat/create").hasAnyRole("TEACHER", "USER", "STUDENT")
+                    .mvcMatchers("/game-service/chat/create").hasAnyRole("USER", "ADMIN")
                     .mvcMatchers("/class-service/").hasAnyRole("TEACHER", "STUDENT")
                 );
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

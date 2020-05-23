@@ -20,6 +20,8 @@ import SignIn from './Components/Common/Navigation/SignIn'
 import Score from './Components/GamesPages/Score'
 import Profile from './Components/GamesPages/Profile'
 
+
+
 const StyledSegment = styled(Segment) `
 
     background: #8ff0f7 !important;

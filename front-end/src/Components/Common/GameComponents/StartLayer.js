@@ -8,14 +8,14 @@ class StartLayer extends Component {
     
         switch(this.props.component) {
             case 'Time':
-                console.log('Time at now')
+                this.props.startChangeLayer3()
                 break;
             case 'Phrase':
                 this.props.setTheme('phrases')
                 break;
             case 'Spelling':
             case 'Vocabulary':
-                this.props.changeLayerReturn()
+                this.props.startChangeLayer2()
                 break;
             default: console.log('no game')
         }
@@ -68,33 +68,33 @@ class StartLayer extends Component {
                         stroke='grey'
                         fill='black'/>
                 </Label>
-                <Label 
-                    x={stage.width / 2}
-                    y={stage.height / 2 + 190}
-                    >
-                    <Rect
-                        width={200}
-                        height={70}
-                        offsetX={100}
-                        offsetY={35}
-                        fill='white'
-                        stroke='black'
-                        strokeWidth={10}
-                        cornerRadius={50}/>
-                    <Text
-                        width={200}
-                        height={70}
-                        offsetX={100}
-                        offsetY={35}
-                        align="center"
-                        verticalAlign='middle'
-                        text='Rewiev'
-                        fontSize={30}   
-                        fontFamily='Berkshire Swash'
-                        stroke='grey'
-                        fill='black'
-                    />
-                </Label>
+                {/*<Label */}
+                {/*    x={stage.width / 2}*/}
+                {/*    y={stage.height / 2 + 190}*/}
+                {/*    >*/}
+                {/*    <Rect*/}
+                {/*        width={200}*/}
+                {/*        height={70}*/}
+                {/*        offsetX={100}*/}
+                {/*        offsetY={35}*/}
+                {/*        fill='white'*/}
+                {/*        stroke='black'*/}
+                {/*        strokeWidth={10}*/}
+                {/*        cornerRadius={50}/>*/}
+                {/*    <Text*/}
+                {/*        width={200}*/}
+                {/*        height={70}*/}
+                {/*        offsetX={100}*/}
+                {/*        offsetY={35}*/}
+                {/*        align="center"*/}
+                {/*        verticalAlign='middle'*/}
+                {/*        text='Rewiev'*/}
+                {/*        fontSize={30}   */}
+                {/*        fontFamily='Berkshire Swash'*/}
+                {/*        stroke='grey'*/}
+                {/*        fill='black'*/}
+                {/*    />*/}
+                {/*</Label>*/}
             </Group>
         )
     }

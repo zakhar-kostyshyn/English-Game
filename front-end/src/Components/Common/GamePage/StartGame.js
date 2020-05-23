@@ -40,7 +40,7 @@ class StartGame extends Component {
 
     componentDidUpdate() {
         //  when game end post score  
-        if (this.state.layers[3] == 'layer-4' && !this.state.isScorePost) {
+        if (this.state.layers[3] === 'layer-4' && !this.state.isScorePost) {
 
             this.props.createNewScore(
                 this.props.component, 
@@ -71,8 +71,8 @@ class StartGame extends Component {
         })
     }
 
-    startChangeLayerReturn = () => this.changeLayer('layer-2')
-
+    startChangeLayer2 = () => this.changeLayer('layer-2')
+    startChangeLayer3 = () => this.changeLayer('layer-3')
 
 
     //  change array of layers, remove input layer and insert in the end of array
@@ -173,8 +173,10 @@ class StartGame extends Component {
                     //  start and rewiev layer
                     <StartLayer 
                         setTheme={this.setTheme}
-                        changeLayerReturn={this.startChangeLayerReturn} 
-                        component={this.props.component}/>
+                        startChangeLayer2={this.startChangeLayer2}
+                        startChangeLayer3={this.startChangeLayer3}
+                        component={this.props.component}
+                    />
                 )
             case 'layer-2':
                 return (

@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import { Rect, Label, Text } from 'react-konva'
 
 
-class WordsPhrase extends Component {
+class WordsRects extends Component {
 
     state = {
-        rects: [],
-        gradient: null
+        rects: []
     }
 
     
@@ -17,11 +16,14 @@ class WordsPhrase extends Component {
     //  configuration for rects 
     rectsConfig = () => {
 
+        console.log()
+        //  rework this piece of code
+
         const backdown = 20
         let currentX = 0
-        let currentSecondX = 100
-        let centerdX = 150
-        let centerdSecondX = 150
+        let currentSecondX = 80
+        let centerdX = 100
+        let centerdSecondX = 130
 
         if (this.props.words.length  > 9)
             centerdX = 0
@@ -43,12 +45,12 @@ class WordsPhrase extends Component {
                 index: i,
                 height: 70,
                 width: widthSize,
-                x: currentX + centerdX < 700 ? currentX + centerdX : currentSecondX + centerdSecondX, 
-                y: currentX + centerdX < 700 ? 0 : 100,
+                x: currentX < 650 ? currentX + centerdX : currentSecondX + centerdSecondX, 
+                y: currentX < 650 ? 0 : 100,
                 text: this.props.words[i]
             }]
 
-            if (currentX + centerdX < 700) currentX += widthSize + backdown
+            if (currentX < 650) currentX += widthSize + backdown
             else currentSecondX += widthSize + backdown
 
         }
@@ -105,4 +107,4 @@ class WordsPhrase extends Component {
 
 }
 
-export default WordsPhrase
+export default WordsRects

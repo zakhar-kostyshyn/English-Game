@@ -13,15 +13,24 @@ const StyledSegment = styled(Segment) `
 
 `
 
+const StyledHeader = styled(Header) `
+
+    text-align: center;
+    font-weight: 900 !important;
+    font-size: 40px !important;
+    font-family: chewy;
+
+`
+
 class Profile extends Component {
     render() {
         return (
             <StyledSegment>
-                <Header as='h1' >PROFILE</Header>
-                <Header as='h3' >{'Your Email: ' + this.props.email}</Header>
-                <Header as='h3' >{'Your Username: ' + this.props.username}</Header>
-                <Header as='h3' >{'Your Name: ' + this.props.name}</Header>
-                <Header as='h3' >{'Your Surname: ' + this.props.surname}</Header>
+                <StyledHeader as='h1' >PROFILE</StyledHeader>
+                <StyledHeader as='h3' >{'Your Email: ' + this.props.email}</StyledHeader>
+                <StyledHeader as='h3' >{'Your Username: ' + this.props.username}</StyledHeader>
+                <StyledHeader as='h3' >{'Your Name: ' + this.props.name}</StyledHeader>
+                <StyledHeader as='h3' >{'Your Surname: ' + this.props.surname}</StyledHeader>
             </StyledSegment>
         )
     }

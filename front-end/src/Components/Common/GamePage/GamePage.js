@@ -22,8 +22,10 @@ const StyledHeader = styled.h1 `
     text-align: center;
     font-weight: 900 !important;
     font-size: 40px !important;
-
+    font-family: chewy;
+    
 `
+
 const StyledButton = styled(Button) `
 
     border: 1px solid #444444 !important;
@@ -31,6 +33,8 @@ const StyledButton = styled(Button) `
     width: 70% !important;
     margin: 10px 15% !important;
     max-width: unset !important;
+    font-family: chewy !important;
+    font-size: large !important;
 
 `
 const StyledTextSegment = styled(Segment) `
@@ -38,6 +42,12 @@ const StyledTextSegment = styled(Segment) `
     margin: 0 10% !important;
     font-size: 1.5rem !important;
     text-align: justify;
+
+`
+
+const StyleParagraph = styled.p `
+
+    font-family: lobster;
 
 `
 
@@ -60,17 +70,17 @@ class GamePage extends Component {
                         <StartGame  component={this.props.component}/>
 
                         {/* REDIRECT TO SCORE PAGE  */}
-                        <StyledButton 
+                        <StyledButton
                             content='Show All Score'
                             onClick={this.openResultsTable}/>
 
-                        <StyledHeader>{this.props.component} Game</StyledHeader>
+                        <StyledHeader as={"h1"}> {this.props.component} Game</StyledHeader>
                         {/* <Container> */}
                             <StyledTextSegment>
-                                <p>{this.props.description}</p>
+                                <StyleParagraph>{this.props.description}</StyleParagraph>
                             </StyledTextSegment>
 
-                        <StyledHeader>Comments</StyledHeader>
+                        <StyledHeader as={"h1"}>Comments</StyledHeader>
 
                         {/* CHAT */}
                         <Chat gameName={this.props.component}/>

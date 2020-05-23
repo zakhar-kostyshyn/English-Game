@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/English-Game.iml" filepath="$PROJECT_DIR$/.idea/English-Game.iml" />
+      <module fileurl="file://$PROJECT_DIR$/back-end/class-service/clas.iml" filepath="$PROJECT_DIR$/back-end/class-service/clas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/back-end/config-service/config.iml" filepath="$PROJECT_DIR$/back-end/config-service/config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/back-end/discovery-server/discovery.iml" filepath="$PROJECT_DIR$/back-end/discovery-server/discovery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/back-end/game-service/game.iml" filepath="$PROJECT_DIR$/back-end/game-service/game.iml" />
+      <module fileurl="file://$PROJECT_DIR$/back-end/gateway-user-service/user.iml" filepath="$PROJECT_DIR$/back-end/gateway-user-service/user.iml" />
+    </modules>
+  </component>
+</project>

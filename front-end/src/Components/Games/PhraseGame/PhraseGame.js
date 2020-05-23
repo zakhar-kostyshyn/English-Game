@@ -9,8 +9,8 @@ import Time from '../../Common/GameComponents/Time'
 import Score from '../../Common/GameComponents/Score'
 import TimeLine from '../../Common/GameComponents/TimeLine'
 import ImagePhrase from './ImagePhrase'
-import TextPhrase from './TextPhrase'
-import WordsPhrase from './WordsPhrase'
+import TextField from '../../Common/GameComponents/TextField'
+import WordsRects from '../../Common/GameComponents/WordsRects'
 
 
 class PharaseGame extends Component {
@@ -49,15 +49,15 @@ class PharaseGame extends Component {
     componentDidUpdate() {
         
         //  if StartState represent layer-3
-        if (this.props.currentLayer[3] == 'layer-3') 
+        if (this.props.currentLayer[3] === 'layer-3')
             //  allow if component recive allImages
-            if (this.props.allImages.length != 0 && this.state.allImages.length == 0) 
+            if (this.props.allImages.length !== 0 && this.state.allImages.length === 0)
                 this.setState({
                     allImages: this.props.allImages
                 }, () => this.startGameProcess())            
 
         //  allow if all words for text was correct given (micro task passed) 
-        if (this.state.successWordIndex == this.state.text.length && this.state.text.length > 0)     
+        if (this.state.successWordIndex === this.state.text.length && this.state.text.length > 0)
             this.microTaskComplited()
     }
     
@@ -109,7 +109,7 @@ class PharaseGame extends Component {
                 image: workImg,
                 text: words,
                 shuffleWords: randomSuffleWords,
-                allImages: this.state.allImages.filter(image => image.id != img.id)
+                allImages: this.state.allImages.filter(image => image.id !== img.id)
             })
         }
     }
@@ -145,14 +145,14 @@ class PharaseGame extends Component {
             successWordIndex: ++this.state.successWordIndex,
             score: this.state.time < 10 ? this.state.score + 200 + streak : this.state.score + 100 + streak,
             right: ++this.state.right,
-            streak: this.state.streak == 6 ? this.state.streak : ++this.state.streak,
+            streak: this.state.streak === 6 ? this.state.streak : ++this.state.streak,
         })
     }
 
     wrongAnswerHandler = () => {
 
         //  say wrong
-        speechSynthesis.speak(new SpeechSynthesisUtterance("wrong"))
+        speechSynthesis.speak(new SpeechSynthesisUtterance("no"))
 
         //  decrease score, streak and increase errors
         this.setState({
@@ -174,7 +174,7 @@ class PharaseGame extends Component {
         words.push(_.join(this.state.text, ' '))
 
         //  check the end of rounds 
-        if (this.state.round == this.state.maxRound) 
+        if (this.state.round === this.state.maxRound)
             this.setState({
                 statePlayerData: [...this.state.statePlayerData, {
                     round: this.state.round,
@@ -182,7 +182,7 @@ class PharaseGame extends Component {
                     error: this.state.error,
                     right: this.state.right,
                     time: this.state.time,
-                    mark: this.state.error > this.state.right ? 'Bad' : this.state.error != 0 ? 'Good' : "Well Done"
+                    mark: this.state.error > this.state.right ? 'Bad' : this.state.error !== 0 ? 'Good' : "Well Done"
                 }],
             }, () => {
                 this.endGame()
@@ -196,7 +196,7 @@ class PharaseGame extends Component {
                     error: this.state.error,
                     right: this.state.right,
                     time: this.state.time,
-                    mark: this.state.error > this.state.right ? 'Bad' : this.state.error != 0 ? 'Good' : "Well Done"
+                    mark: this.state.error > this.state.right ? 'Bad' : this.state.error !== 0 ? 'Good' : "Well Done"
                 }],
 
                 successWordIndex: 0,
@@ -247,7 +247,7 @@ class PharaseGame extends Component {
         
     onClickWordButton = e => {
         //  chek if pressed word match with curent successWordIndex
-        if (e.target.attrs.text == this.state.text[this.state.successWordIndex]) 
+        if (e.target.attrs.text === this.state.text[this.state.successWordIndex])
             this.correctAnswerHandler()
         else this.wrongAnswerHandler()
     }
@@ -256,6 +256,7 @@ class PharaseGame extends Component {
 
     render() {
 
+        //  must be ==
         if (this.state.image == undefined) return ( <Loading/> )
         else 
             return (
@@ -267,7 +268,6 @@ class PharaseGame extends Component {
              
                     {/* BACK PAUSE ROUND */}
                     <BackPauseRound
-                        backReturn={this.onClickBack}
                         pauseReturn={this.onClickPause}
                         round={this.state.round}
                     />
@@ -285,16 +285,16 @@ class PharaseGame extends Component {
                     <TimeLine time={this.state.time}/>
                     
                     {/* WORD REPRESENT */}
-                    <TextPhrase 
+                    <TextField
                         text={this.state.text} 
                         successWordIndex={this.state.successWordIndex}
                     />
 
                     {/* WORDS */}
-                    <WordsPhrase
+                    <WordsRects
                         words={this.state.shuffleWords}
-                        clickWordButtonReturn={this.onClickWordButton} 
                         isPause={this.state.isTimeStop}
+                        clickWordButtonReturn={this.onClickWordButton}
                     />
 
                 </Label>

@@ -1,5 +1,6 @@
 package com.game.user.payload;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@Builder
 public class CreateUser {
 
     @NotBlank(message = "Field 'name' must be filled")

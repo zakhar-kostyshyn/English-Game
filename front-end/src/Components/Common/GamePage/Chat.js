@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Comment, CommentGroup, Header, Form, TextArea, Button } from 'semantic-ui-react'
+import {Comment, CommentGroup, Header, Form, TextArea, Button, Segment} from 'semantic-ui-react'
 import { getAllMessage, postNewMessage } from '../../../Actions/ChatAction'
 import moment from "moment"
 import styled from 'styled-components'
@@ -22,7 +22,7 @@ const StyledCommentGroup = styled(CommentGroup) `
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     padding-inline-start: 40px;
-    margin-left: 30px !important
+    margin-left: 18% !important;
 
 `
 
@@ -39,6 +39,15 @@ const StyledTextArea = styled(TextArea) `
     min-height: 140px !important;
     max-width: 100% !important;
 
+`
+
+const StyledHeader = styled.h1 `
+
+    text-align: center;
+    font-weight: 900 !important;
+    font-size: 40px !important;
+    font-family: chewy;
+    
 `
 
 class Chat extends Component {
@@ -108,14 +117,14 @@ class Chat extends Component {
                             />
                         </Form>      
                     :
-                        <Header>You should be Registrated to make comment</Header>
+                        <StyledHeader>You should be Registrated to make comment</StyledHeader>
                     }
                     
                 </StyledCommentGroup>
             )
         else 
             return (
-                <Header>Loading...</Header>
+                <StyledHeader>Loading...</StyledHeader>
             )
     }
 
@@ -148,7 +157,7 @@ export const dataCounter = date => {
                 return moment().diff(date, 'months') + " months ago"
 
             default :
-                return moment().diff(date, 'years') + " years ago"
+                return "1 month ago"
             
         }
     } else {

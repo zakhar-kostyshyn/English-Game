@@ -169,8 +169,9 @@ public class UserService {
                 .collect(Collectors.toList());
 
 
-
         return JwtResponse.builder()
+                .surname(userDetails.getSurname())
+                .name(userDetails.getName())
                 .token(token)
                 .id(userDetails.getId())
                 .username(userDetails.getUsername())

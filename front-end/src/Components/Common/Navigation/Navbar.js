@@ -12,6 +12,14 @@ const StyledMenu = styled(Menu)`
     padding: 20px 20px 20px 40px;
     border-radius: 2.5em !important;
     box-shadow: 0 0 15px 2px #373636 !important;
+    
+`
+
+const StyledHeader = styled(Header) `
+
+    font-family: chewy !important;
+    margin-bottom: 0px !important;
+
 `
 
 
@@ -37,15 +45,18 @@ class Navbar extends Component {
                 {/* Menu in navbar */}
                 <StyledMenu borderless>
                     <Menu.Item name='home' as={Link} to='/home'>
-                        <Header>English Game</Header>
+                        <StyledHeader as={"h1"}> English Game</StyledHeader>
                     </Menu.Item>
                     <Menu.Menu position='right'>
                         {/* if guest is not auhtenticate then show sing-in icon else show username icon and name */}
                         {   this.props.isLoginSuccess ?
                             <Menu.Menu position='right'>
-                                <Menu.Item>{this.props.username}</Menu.Item>
+                                <Menu.Item size={'large'}>
+                                    <StyledHeader> {this.props.username} </StyledHeader>
+                                </Menu.Item>
                                 <Menu.Item>
-                                    <Dropdown icon='user'>
+                                    <Icon name={"user"} size={'large'}/>
+                                    <Dropdown>
                                         <Dropdown.Menu>
                                             <Dropdown.Item as={Link} to='/home/profile'>Profile</Dropdown.Item>
                                             <Dropdown.Item as={Link} to='/home' onClick={this.onLogOut}>Log Out</Dropdown.Item>
@@ -56,7 +67,7 @@ class Navbar extends Component {
                             </Menu.Menu>
                         :
                             <Menu.Item onClick={this.props.showDimmer}>
-                                <Icon name='sign-in'/>
+                                <Icon name={'sign-in'} size={'large'}/>
                             </Menu.Item>
                         }
                     </Menu.Menu>

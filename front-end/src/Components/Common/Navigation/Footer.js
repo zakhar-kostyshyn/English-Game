@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {Grid, Header, Menu, List, Icon, Container, Segment, GridColumn, Divider, Image} from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
+import {Grid, Header, List, Icon, Container, Segment} from 'semantic-ui-react'
 import styled from 'styled-components'
 
 const StyledSegment = styled(Segment)`
@@ -46,7 +45,7 @@ class Footer extends Component {
                         <Grid.Column width={6}>
                         <Header inverted as='h4' content='Description' />
                         <p>
-                           Dyplomna work
+                           Diploma work
                         </p>
                         </Grid.Column>
                     </Grid>
