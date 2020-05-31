@@ -110,7 +110,7 @@ class PharaseGame extends Component {
                 text: words,
                 shuffleWords: randomSuffleWords,
                 allImages: this.state.allImages.filter(image => image.id !== img.id)
-            })
+            }, () => speechSynthesis.speak(new SpeechSynthesisUtterance(_.join(this.state.text, ' '))))
         }
     }
 
@@ -163,8 +163,6 @@ class PharaseGame extends Component {
     }
 
     microTaskComplited = () => {
-
-        speechSynthesis.speak(new SpeechSynthesisUtterance(_.join(this.state.text, ' ')))
 
         //  stop timer
         clearInterval(this.state.tick)

@@ -16,17 +16,14 @@ class WordsRects extends Component {
     //  configuration for rects 
     rectsConfig = () => {
 
-        console.log()
-        //  rework this piece of code
-
         const backdown = 20
         let currentX = 0
         let currentSecondX = 80
         let centerdX = 100
-        let centerdSecondX = 130
+        let centerdSecondX = 160
 
-        if (this.props.words.length  > 9)
-            centerdX = 0
+        if (this.props.words.length <= 6)
+            centerdX = 140
 
         let temp = []
         for (let i = 0; i < this.props.words.length; i++) {

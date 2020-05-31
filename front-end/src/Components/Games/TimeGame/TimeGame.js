@@ -271,7 +271,7 @@ class TimeGame extends Component {
                 wordsToShuffleText.push(" O'clock ", " To ", hour_text[hours])
                 break
             case minutes < 30:
-                text.push(its, minute_text[minutes / 5 - 1], past, hour_text[hours - 1])
+                text.push(its, minute_text[minutes / 5], past, hour_text[hours - 1])
                 wordsToShuffleText.push(quarter, to, hour_text[hours])
                 break
             case minutes > 30:
