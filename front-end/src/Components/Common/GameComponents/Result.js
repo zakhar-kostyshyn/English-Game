@@ -223,12 +223,12 @@ class Result extends Component {
                             <Text
                                 width={300}
                                 height={70}
-                                align='center'
-                                verticalAlign='middle'
+                                align="center"
+                                verticalAlign="middle"
                                 text={'Your Rang : ' + this.props.indexAddScore}
                                 fontSize={30}
-                                fontFamily='Berkshire Swash'
-                                fill='black'
+                                fontFamily="Berkshire Swash"
+                                fill="black"
                             />
                         </Label>
 

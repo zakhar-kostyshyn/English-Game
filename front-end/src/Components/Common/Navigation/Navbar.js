@@ -60,7 +60,7 @@ class Navbar extends Component {
                                         <Dropdown.Menu>
                                             <Dropdown.Item as={Link} to='/home/profile'>Profile</Dropdown.Item>
                                             <Dropdown.Item as={Link} to='/home' onClick={this.onLogOut}>Log Out</Dropdown.Item>
-                                            <Dropdown.Item >Stats</Dropdown.Item>
+                                            <Dropdown.Item as={Link} to='/home/stats'>Stats</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Menu.Item>

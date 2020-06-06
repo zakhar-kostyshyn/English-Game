@@ -1,5 +1,6 @@
 package com.game.user.service;
 
+import com.game.user.model.Stats;
 import com.game.user.payload.CreateUser;
 import com.game.user.payload.JwtResponse;
 import com.game.user.payload.LoginUser;
@@ -7,6 +8,7 @@ import com.game.user.model.ERoles;
 import com.game.user.model.Role;
 import com.game.user.model.User;
 import com.game.user.repository.RoleRepository;
+import com.game.user.repository.StatsRepository;
 import com.game.user.repository.UserRepository;
 import com.game.user.security.JwtTokenService;
 import com.game.user.security.UserDetailsImpl;
@@ -48,6 +50,9 @@ public class UserService {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private StatsRepository statsRepository;
 
 
     //  get user by username
@@ -106,6 +111,12 @@ public class UserService {
             newRole.add(userRole);
         }
 
+        //  create start stats for user
+        Stats startUserStats = Stats.builder()
+                .userGames(0L)
+                .userScore(0L)
+                .userTime(0L)
+                .build();
 
         User createdUser = User.builder()
                 .roles(newRole)
@@ -114,9 +125,11 @@ public class UserService {
                 .password(bCryptPasswordEncoder.encode(newUser.getPassword()))
                 .surname(newUser.getSurname())
                 .username(newUser.getUsername())
+                .stats(startUserStats)
                 .build();
 
         userRepository.save(createdUser);
+        statsRepository.save(startUserStats);
 
         log.info("new User : " + createdUser);
 

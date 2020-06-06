@@ -32,6 +32,7 @@ class ScoreSpelling extends Component {
                         verticalAlign='middle'
                         fontSize={50}
                         text={this.props.score}
+                        fontFamily='Berkshire Swash'
                     />
                 </Label>
 

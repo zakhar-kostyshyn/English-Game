@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Rect, Label, Text } from 'react-konva'
+import WordsRectsHighlight from "./WordsRectsHighlight";
 
 
 class WordsRects extends Component {
@@ -57,9 +58,6 @@ class WordsRects extends Component {
         })    
     }
 
-    onClick = e => this.props.clickWordButtonReturn(e)
-
-
     render() {
         
         return (
@@ -69,33 +67,7 @@ class WordsRects extends Component {
 
                 {/* WORDS RECTS */}
                 {this.state.rects.map(rect => (
-                    <Label
-                        x={rect.x}
-                        y={rect.y}
-                        key={rect.index}>
-
-                        <Rect
-                            width={rect.width}
-                            height={rect.height}
-                            fill='white'
-                            strokeWidth={5}
-                            cornerRadius={10}
-                            stroke='black'
-                        />
-
-                        <Text
-                            width={rect.width}
-                            height={rect.height}
-                            align='center'
-                            verticalAlign='middle'
-                            fontSize={30}
-                            listening={!this.props.isPause}
-                            text={rect.text}
-                            onClick={this.onClick}
-                        />
-
-                        
-                    </Label>
+                    <WordsRectsHighlight rect={rect} key={rect.index} clickWordButtonReturn={this.props.clickWordButtonReturn}/>
                 ))}
               
             </Label>

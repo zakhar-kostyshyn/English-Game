@@ -32,6 +32,7 @@ class TimeSpelling extends Component {
                         verticalAlign='middle'
                         fontSize={50}
                         text={this.props.time}
+                        fontFamily='Berkshire Swash'
                     />
                 </Label>
 

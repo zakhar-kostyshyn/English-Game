@@ -14,6 +14,7 @@ class LineVocabulary extends Component {
     }
 
     
+    
     render() {      
  
         const positions = {
@@ -36,13 +37,14 @@ class LineVocabulary extends Component {
 
                         <Label
                             name={this.props.firstLineImages[0].name}
+                            listening={this.props.firstLineImages[0].visible}
                             onClick={this.onClickFirstLine}>
                             <Rect
                                 width={positions.width}
                                 height={positions.height}
                                 strokeWidth={5}
-                                stroke='black'
-                                fill='white'
+                                stroke="black"
+                                fill="white"
                                 cornerRadius={20}
                             />
 
@@ -54,7 +56,7 @@ class LineVocabulary extends Component {
                                 fillPatternScaleY={positions.scale}
                                 fillPatternOffsetX={-10}
                                 fillPatternOffsetY={-30}
-                                fillPatternRepeat='no-repeat'
+                                fillPatternRepeat="no-repeat"
                                 cornerRadius={20}
                                 visible={this.props.firstLineImages[0].visible}
                             />
@@ -63,8 +65,8 @@ class LineVocabulary extends Component {
                                 width={positions.width}
                                 height={positions.height}
                                 strokeWidth={5}
-                                stroke='black'
-                                fill='green'
+                                stroke="black"
+                                fill="green"
                                 cornerRadius={20}
                                 visible={!this.props.firstLineImages[0].visible}
                             />
@@ -73,6 +75,7 @@ class LineVocabulary extends Component {
 
                         <Label
                             name={this.props.firstLineImages[1].name}
+                            listening={this.props.firstLineImages[1].visible}
                             onClick={this.onClickFirstLine}
                             x={190}>
 
@@ -81,8 +84,8 @@ class LineVocabulary extends Component {
                                 width={positions.width}
                                 height={positions.height}
                                 strokeWidth={5}
-                                stroke='black'
-                                fill='white'
+                                stroke="black"
+                                fill="white"
                                 cornerRadius={20}
                             />
 
@@ -94,9 +97,9 @@ class LineVocabulary extends Component {
                                 fillPatternScaleY={positions.scale}
                                 fillPatternOffsetX={-10}
                                 fillPatternOffsetY={-30}
-                                fillPatternRepeat='no-repeat'
+                                fillPatternRepeat="no-repeat"
                                 strokeWidth={5}
-                                stroke='black'
+                                stroke="black"
                                 cornerRadius={20}
                                 visible={this.props.firstLineImages[1].visible}
                             />
@@ -105,8 +108,8 @@ class LineVocabulary extends Component {
                                 width={positions.width}
                                 height={positions.height}
                                 strokeWidth={5}
-                                stroke='black'
-                                fill='green'
+                                stroke="black"
+                                fill="green"
                                 cornerRadius={20}
                                 visible={!this.props.firstLineImages[1].visible}
                             />
@@ -115,6 +118,7 @@ class LineVocabulary extends Component {
 
                         <Label
                             name={this.props.firstLineImages[2].name}
+                            listening={this.props.firstLineImages[2].visible}
                             onClick={this.onClickFirstLine}
                             x={190 + 190}>
 
@@ -122,8 +126,8 @@ class LineVocabulary extends Component {
                                 width={positions.width}
                                 height={positions.height}
                                 strokeWidth={5}
-                                stroke='black'
-                                fill='white'
+                                stroke="black"
+                                fill="white"
                                 cornerRadius={20}
                             />
 
@@ -163,6 +167,7 @@ class LineVocabulary extends Component {
 
                         <Label
                             name={this.props.secondLineImages[0].name}
+                            listening={this.props.secondLineImages[0].visible}
                             onClick={this.onClickSecondLine}>
 
                             <Rect
@@ -180,6 +185,7 @@ class LineVocabulary extends Component {
                                 align='center'
                                 verticalAlign='middle'
                                 fontSize={35}
+                                fontFamily="Berkshire Swash"
                                 text={this.props.secondLineImages[0].name}
                                 visible={this.props.secondLineImages[0].visible}
                             />
@@ -199,6 +205,7 @@ class LineVocabulary extends Component {
                         <Label 
                             onClick={this.onClickSecondLine}
                             name={this.props.secondLineImages[1].name}
+                            listening={this.props.secondLineImages[1].visible}
                             x={190}>
 
                             <Rect
@@ -216,6 +223,7 @@ class LineVocabulary extends Component {
                                 align='center'
                                 verticalAlign='middle'
                                 fontSize={35}
+                                fontFamily="Berkshire Swash"
                                 text={this.props.secondLineImages[1].name}
                                 visible={this.props.secondLineImages[1].visible}
                             />
@@ -235,6 +243,7 @@ class LineVocabulary extends Component {
                         <Label
                             onClick={this.onClickSecondLine}
                             name={this.props.secondLineImages[2].name}
+                            listening={this.props.secondLineImages[2].visible}
                             x={190 + 190}>
 
                             <Rect
@@ -252,6 +261,7 @@ class LineVocabulary extends Component {
                                 align='center'
                                 verticalAlign='middle'
                                 fontSize={35}
+                                fontFamily="Berkshire Swash"
                                 text={this.props.secondLineImages[2].name}
                                 visible={this.props.secondLineImages[2].visible}
                             />

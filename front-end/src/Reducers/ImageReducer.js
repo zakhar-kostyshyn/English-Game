@@ -1,6 +1,7 @@
 import { 
     GET_THEME, 
-    GET_IMAGE 
+    GET_IMAGE,
+    DELETE_THEME
 } from '../types'   
 
 const initialState = {
@@ -12,6 +13,10 @@ export default function(state = initialState, action) {
         case GET_THEME:
             return {
                 images: action.payload
+            }
+        case DELETE_THEME:
+            return {
+                images: []
             }
         default:
             return {

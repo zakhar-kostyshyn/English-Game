@@ -64,7 +64,7 @@ class RectHiglight extends Component {
                     height={100}
                     offsetX={50}
                     offsetY={50}
-                    fontSize={20} 
+                    fontSize={24}
                     align='center'
                     verticalAlign='middle'  
                     fontFamily='Berkshire Swash'

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Segment } from 'semantic-ui-react'
 import { Stage, Layer, Group } from 'react-konva'
 import ChooseTheme from '../GameComponents/ChooseTheme'
-import { getTheme } from '../../../Actions/ImageAction'
+import { getTheme, deleteTheme } from '../../../Actions/ImageAction'
 import Result from '../GameComponents/Result'
 import VocabularyGame from '../../Games/VocabularyGame/VocabularyGame'
 import SpellingGame from '../../Games/SpellingGame/SpellingGame'
@@ -13,6 +13,7 @@ import PhraseGame from '../../Games/PhraseGame/PhraseGame'
 import TimeGame from '../../Games/TimeGame/TimeGame'
 import StartLayer from '../GameComponents/StartLayer'
 import { createNewScore } from '../../../Actions/ScoreAction'
+import { postStats } from '../../../Actions/StatsAction'
 import moment from "moment"
 
 
@@ -28,7 +29,7 @@ class StartGame extends Component {
         layers: ['layer-4', 'layer-3', 'layer-2', 'layer-1'],
 
         playerScore: 0,
-        playerData: null,
+        playerData: [],
 
         task: null,
         isTaskComplited: false,
@@ -51,10 +52,29 @@ class StartGame extends Component {
             //  only one
             this.setState({
                 isScorePost: true
+            }, () => {
+                //  send stats after game to the backend
+
+                let totalTime = 0
+                this.state.playerData.forEach(o => {
+                    console.log(o.time)
+                    totalTime += o.time
+                })
+
+                console.log("TIME " + totalTime)
+                this.props.postStats(
+                    this.props.username,
+                    this.state.playerScore,
+                    totalTime
+                )
             })
         }
     }
 
+    //  delete all images when transit on home page
+    componentWillUnmount() {
+        this.props.deleteTheme()
+    }
 
     //  save date and score from game 
     gamePlayerDataAndScoreReturn = (data, score) => {
@@ -195,7 +215,6 @@ class StartGame extends Component {
                     //  show table set to the props name of game
                     <Result 
                         data={this.state.playerData} 
-                        score={this.state.playerScore}
                         indexAddScore={this.props.indexAddScore}
                     />
                 )    
@@ -222,7 +241,7 @@ class StartGame extends Component {
 const mapStateToProps = state => ({
     images: state.ImageReducer.images,
     indexAddScore: state.ScoreReducer.indexAddScore,
-    username: state.UserReducer.username
+    username: state.UserReducer.username,
 })
 
-export default connect(mapStateToProps, { getTheme, createNewScore })(StartGame)
+export default connect(mapStateToProps, { getTheme, createNewScore, deleteTheme, postStats })(StartGame)

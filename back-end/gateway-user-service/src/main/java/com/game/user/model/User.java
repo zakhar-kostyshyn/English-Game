@@ -1,5 +1,6 @@
 package com.game.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,7 +15,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
 @Table(name = "users_table", uniqueConstraints = {
         @UniqueConstraint(columnNames = "username")
@@ -47,5 +47,9 @@ public class User {
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    private Stats stats;
 
 }

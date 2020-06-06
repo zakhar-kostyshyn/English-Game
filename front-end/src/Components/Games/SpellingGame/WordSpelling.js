@@ -46,8 +46,10 @@ class WordSpelling extends Component {
                     offsetY={25}
                     fill='white'
                     stroke='black'
-                    strokeWidth={2}
+                    strokeWidth={6}
                     cornerRadius={20}
+                    shadowColor={"black"}
+                    shadowBlur={5}
                 />
 
                 <Text
@@ -60,6 +62,7 @@ class WordSpelling extends Component {
                     verticalAlign='middle'
                     fontSize={40}
                     text={_.join(this.state.word, '   ')}
+                    fontFamily='Berkshire Swash'
                 />
             
 

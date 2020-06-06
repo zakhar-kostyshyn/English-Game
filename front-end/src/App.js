@@ -19,6 +19,7 @@ import Footer from './Components/Common/Navigation/Footer';
 import SignIn from './Components/Common/Navigation/SignIn'
 import Score from './Components/GamesPages/Score'
 import Profile from './Components/GamesPages/Profile'
+import StatsPage from './Components/GamesPages/StatsPage'
 
 
 
@@ -58,6 +59,7 @@ class App extends React.Component {
               <Route exact path='/home/time' component={Time} />
               <Route exact path='/home/score' component={Score} />
               <Route exact path='/home/profile' component={Profile} />
+              <Route exact path='/home/stats' component={StatsPage} />
             </Switch>
             <Footer/>
             <Dimmer.Inner 

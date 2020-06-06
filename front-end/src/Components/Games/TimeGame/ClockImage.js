@@ -93,6 +93,8 @@ class ClockImage extends Component {
                     lineJoin={"round"}
                     shadowColor={"#111111"}
                     shadowBlur={5}
+                    tension={1}
+                    lineCap={"round"}
                 />
 
                 {/*HOURS POINT*/}
@@ -103,6 +105,8 @@ class ClockImage extends Component {
                     lineJoin={"round"}
                     shadowColor={"#111111"}
                     shadowBlur={5}
+                    tension={1}
+                    lineCap={"round"}
                 />
 
                 <Circle

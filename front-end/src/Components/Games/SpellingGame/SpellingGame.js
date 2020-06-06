@@ -102,8 +102,8 @@ class SpellingGame extends Component {
         const randomLetters = rightLetters                              
 
         let size = rightLetters.length
-        while (size++ < 15) 
-            randomLetters.push(String.fromCharCode(_.random(97, 122)))   // add random letters to 15
+        while (size++ < 11)
+            randomLetters.push(String.fromCharCode(_.random(97, 122)))   // add random letters to 11
         
         const randomSuffleLetters = _.shuffle(randomLetters)            //  shuffle
 
@@ -142,7 +142,7 @@ class SpellingGame extends Component {
     correctAnswerHandler = () => {
 
         //  say well play
-        speechSynthesis.speak(new SpeechSynthesisUtterance("correct"))
+        speechSynthesis.speak(new SpeechSynthesisUtterance("good"))
 
         const streak = 100 * this.state.streak
 
@@ -158,7 +158,7 @@ class SpellingGame extends Component {
     wrongAnswerHandler = () => {
 
         //  say wrong
-        speechSynthesis.speak(new SpeechSynthesisUtterance("wrong"))
+        speechSynthesis.speak(new SpeechSynthesisUtterance("no"))
 
         //  decrease score, streak and increase errors
         this.setState({

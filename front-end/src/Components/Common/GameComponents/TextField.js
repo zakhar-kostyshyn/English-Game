@@ -59,6 +59,7 @@ class TextField extends Component {
                     align='center'
                     verticalAlign='middle'
                     fontSize={25}
+                    fontFamily='Berkshire Swash'
                     text={_.join(this.state.text, ' ')}
                 />
             

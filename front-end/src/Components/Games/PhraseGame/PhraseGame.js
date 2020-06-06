@@ -63,6 +63,7 @@ class PharaseGame extends Component {
     
 
     componentWillUnmount() {
+
         //  stop timer
         clearInterval(this.state.tick)
     }
@@ -163,6 +164,8 @@ class PharaseGame extends Component {
     }
 
     microTaskComplited = () => {
+
+        speechSynthesis.speak(new SpeechSynthesisUtterance("correct"))
 
         //  stop timer
         clearInterval(this.state.tick)

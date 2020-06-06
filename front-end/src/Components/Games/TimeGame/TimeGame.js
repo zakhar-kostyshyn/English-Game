@@ -43,7 +43,9 @@ class TimeGame extends Component {
 
         statePlayerData: [],
 
-        onlyFirstUpdate: true
+        onlyFirstUpdate: true,
+
+
 
     }
 
