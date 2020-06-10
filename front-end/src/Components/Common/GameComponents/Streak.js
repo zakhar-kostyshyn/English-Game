@@ -8,18 +8,21 @@ class StreakSpelling extends Component {
         rects: []
     }
 
-    //  when componet would be create  it creats 6 rects
+
+
+    //  when component would be create  it creat 6 rects
     componentDidMount() {
 
         let temp = []
         for (let i = 0; i < 6; i++) 
-            //  very sensative props for rects on sreak line
+            //  very sensitive props for rects on streak line
             temp = [...temp, {
                 index: i,
                 height: 42,
                 width: 130,
                 x: 10,
-                y: 260 - 50 * i
+                y: 260 - 50 * i,
+                color: i < 2 ? "green" : i < 4 ? "yellow" : "red"
             }]
 
         this.setState({
@@ -37,10 +40,10 @@ class StreakSpelling extends Component {
                 <Rect 
                     width={150}
                     height={310}
-                    fill='yellow'
+                    fill="#FFFCBA"
                     cornerRadius={20}
                     strokeWidth={10}
-                    stroke='black'
+                    stroke="black"
                 />
 
                 {/* STREAK RECTS */}
@@ -51,7 +54,7 @@ class StreakSpelling extends Component {
                         y={rect.y}
                         width={rect.width}
                         height={rect.height}
-                        fill={ this.props.streak > rect.index ? 'green' : '' }
+                        fill={ this.props.streak > rect.index ? rect.color : "" }
                         strokeWidth={5}
                         cornerRadius={10}
                         stroke='black'

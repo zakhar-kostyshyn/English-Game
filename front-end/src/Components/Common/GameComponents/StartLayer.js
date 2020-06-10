@@ -39,7 +39,7 @@ class StartLayer extends Component {
                     verticalAlign='middle'
                     text={'Game ' + this.props.component}
                     fontSize={70}   
-                    fontFamily='Berkshire Swash'
+                    fontFamily={"Berkshire Swash"}
                     stroke='grey'
                     fill='black'/>
                 <Label 
@@ -64,7 +64,7 @@ class StartLayer extends Component {
                         verticalAlign='middle'
                         text='Start'
                         fontSize={50}   
-                        fontFamily='Berkshire Swash'
+                        fontFamily={"Berkshire Swash"}
                         stroke='grey'
                         fill='black'/>
                 </Label>

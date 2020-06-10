@@ -68,6 +68,7 @@ class LineVocabulary extends Component {
                                 stroke="black"
                                 fill="green"
                                 cornerRadius={20}
+                                opacity={4}
                                 visible={!this.props.firstLineImages[0].visible}
                             />
 
